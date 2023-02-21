@@ -1,0 +1,5 @@
+#Could not find or load main class worker.org.gradle.process.internal.worker.GradleWorkerMain
+인코딩 한글로 하려고 VM을 건드렸다 오류남
+
+#테스트에서 JPA사용시 h2 등 db 존재 안하면 바로 빈 생성 오류남
+entity도 javax가아닌 spring거 사용시 빈 생성 오류
