@@ -146,8 +146,8 @@ function ButtonForm(props) {
         for (let i=0;i<qArr.length;i++) {
             result.push(<Button variant="outlined" key={qArr[i]} value={qArr[i]} onClick={(event) => {
                         event.preventDefault();
-                        axios.post('/requestRQ',
-                            {originQ: `What is the ${qArr[i]}?`, originA: `What is the ${qArr[i]}?`})
+                        axios.post('/api/requestTransKE',
+                            {sentence: `What is the ${qArr[i]}?`, originA: `What is the ${qArr[i]}?`})
                             .then(function (response) {
                                 console.log(response);
                             })
