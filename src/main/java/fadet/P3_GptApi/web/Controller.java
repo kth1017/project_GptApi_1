@@ -1,8 +1,10 @@
 package fadet.P3_GptApi.web;
 
+
 import fadet.P3_GptApi.service.PapagoService;
 import fadet.P3_GptApi.service.RecomQService;
 import fadet.P3_GptApi.web.dto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.RequestRQ2Dto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +18,7 @@ public class Controller {
 
     private final PapagoService papagoService;
     private final RecomQService recomQService;
+
 
 
     @PostMapping("/api/requestTransKE")
@@ -35,6 +38,16 @@ public class Controller {
     @GetMapping("/api/requestRQ")
     public String[] requestRecomQ(){
         return recomQService.getRecomQ();
+    }
+
+    @PostMapping("/api/requestRQ2")
+    public void requestRecomQ2(@RequestBody RequestRQ2Dto dto){
+        recomQService.setSmallCateArr(dto);
+    }
+
+    @GetMapping("/api/responseRQ2")
+    public String[] responseRecomQ2(){
+        return recomQService.getRecomQ2();
     }
 
 

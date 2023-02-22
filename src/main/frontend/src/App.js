@@ -132,6 +132,9 @@ function ButtonForm(props) {
     const [transQ, setTransQ] = useFormState(1);
     const [resultA, setResultA] = useFormState(2);
     const [qArr, setQArr] = useState([]);
+    const [q2Arr, setQ2Arr] = useState([]);
+    const [lCategory, SetLCategory] = useState('');
+
 
     console.log("buttonform 렌더링");
 
@@ -146,14 +149,36 @@ function ButtonForm(props) {
         for (let i=0;i<qArr.length;i++) {
             result.push(<Button variant="outlined" key={qArr[i]} value={qArr[i]} onClick={(event) => {
                         event.preventDefault();
+                        axios.post('/api/requestRQ2',
+                                        {category: `${qArr[i]}`})
+                                    .then(response => {
+                                        console.log(response);
+                                        axios.get('/api/responseRQ2')
+                                        .then(response => setQ2Arr(response.data))
+                                        .catch(error => console.log(error))    
+                                    })
+                                    .catch(error =>{console.log(error)});
                         setTransQ(`What is the ${qArr[i]}?`);
+                        SetLCategory(qArr[i]);
                         }}>{qArr[i]}</Button>);
-
-            }
+                    }
         return result;
     }
-    return grouping()
-
+        const grouping2 = () => {
+            const result = [];
+            for (let i=0;i<q2Arr.length;i++) {
+                result.push(<Button variant="outlined" key={q2Arr[i]} value={q2Arr[i]} onClick={(event) => {
+                            event.preventDefault();
+                            setTransQ(`What is the ${q2Arr[i]} in ${lCategory}?`);
+                            }}>{q2Arr[i]}</Button>);
+                            
+                }
+            return result;    
+    }
+    return <>
+        <div>{grouping()}</div>
+        <div>{grouping2()}</div>
+    </>
 
 }
 

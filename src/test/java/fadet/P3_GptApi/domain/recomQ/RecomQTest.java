@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.List;
 
 
 @ExtendWith(SpringExtension.class)
@@ -15,10 +14,10 @@ class RecomQTest {
         //given
         RecomQ recomQ = new RecomQ();
         //when
-        List<String> largeCate = recomQ.getLargeCategory();
+        String[] largeCate = recomQ.getLData();
 
         //then
-        Assertions.assertThat(largeCate.get(0)).isEqualTo("java");
+        Assertions.assertThat(largeCate[0]).isEqualTo("java");
     }
 
 }
