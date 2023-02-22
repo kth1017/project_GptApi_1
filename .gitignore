@@ -17,6 +17,8 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+**/src/main/resources/application-api-key.properties
+
 ### IntelliJ IDEA ###
 .idea
 *.iws
@@ -36,5 +38,5 @@ out/
 ### VS Code ###
 .vscode/
 
-**/src/main/resources/application-api-key.properties
+
 
