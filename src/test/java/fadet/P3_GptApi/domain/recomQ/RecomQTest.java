@@ -1,6 +1,5 @@
 package fadet.P3_GptApi.domain.recomQ;
 
-import fadet.P3_GptApi.domain.answer.Answer;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,7 +7,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(SpringExtension.class)
 class RecomQTest {

@@ -8,7 +8,7 @@ import fadet.P3_GptApi.web.dto.ForTransKtoERequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -37,7 +37,7 @@ class PapagoServiceTest {
     @Test
     void KoToEn번역요청(){
         //given
-        ForTrans savedOne = repository.save(new ForTrans("안녕하세요.", 1));
+        repository.save(new ForTrans("안녕하세요.", 1));
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
 
 

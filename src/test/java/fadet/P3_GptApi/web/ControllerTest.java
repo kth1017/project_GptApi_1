@@ -1,7 +1,7 @@
 package fadet.P3_GptApi.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import fadet.P3_GptApi.ApiKey;
+
 import fadet.P3_GptApi.domain.forTrans.ForTrans;
 import fadet.P3_GptApi.domain.forTrans.ForTransRepository;
 import fadet.P3_GptApi.service.PapagoService;
@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -34,7 +33,7 @@ class ControllerTest {
 
     private MockMvc mvc;
 
-    // WebApplicationContext 사용하여 .setup으로 컨트롤러 묶어서 처리 가능. 여기선 레포땜시 stand 사용
+    // WebApplicationContext 사용하여 .setup으로 컨트롤러 묶어서 처리 가능. 컨트롤러 한개라 stand 사용
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.standaloneSetup(controller)

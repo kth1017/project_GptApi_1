@@ -1,6 +1,5 @@
 package fadet.P3_GptApi;
 
-import fadet.P3_GptApi.domain.forTrans.ForTrans;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
