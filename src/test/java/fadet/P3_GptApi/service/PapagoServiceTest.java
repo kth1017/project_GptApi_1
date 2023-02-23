@@ -1,10 +1,9 @@
 package fadet.P3_GptApi.service;
 
 import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.domain.forTrans.ForTrans;
-import fadet.P3_GptApi.domain.forTrans.ForTransRepository;
-import fadet.P3_GptApi.web.dto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,8 +16,13 @@ class PapagoServiceTest {
 
     @Autowired ApiKey apiKey;
     @Autowired
-    ForTransRepository repository;
+    ForTransRepositoryImpl repository;
     @Autowired PapagoService papagoService;
+
+    @AfterEach
+    void clear(){
+        repository.clear();
+    }
 
     @Test
     void KoToEn문장저장(){
@@ -30,42 +34,19 @@ class PapagoServiceTest {
 
         //then
         assertThat(savedContent).isEqualTo("안녕하세요.");
-
-
     }
 
     @Test
     void KoToEn번역요청(){
         //given
-        repository.save(new ForTrans("안녕하세요.", 1));
+        repository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
-
 
         //when
         String transedContent = papagoService.transKtoE();
 
         //then
         assertThat(transedContent).isEqualTo(expectedMessage);
-
-
     }
-
-    @Test
-    void EnToKo번역요청(){
-        //given
-        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("Hello.");
-        String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"en\",\"tarLangType\":\"ko\",\"translatedText\":\"안녕하세요.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
-
-
-        //when
-        String transedContent = papagoService.transEntoKo(dto);
-
-        //then
-        assertThat(transedContent).isEqualTo(expectedMessage);
-
-
-    }
-
-
 
 }

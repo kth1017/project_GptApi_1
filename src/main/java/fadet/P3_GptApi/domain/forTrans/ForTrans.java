@@ -1,6 +1,8 @@
 package fadet.P3_GptApi.domain.forTrans;
 
 import fadet.P3_GptApi.ApiKey;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +25,17 @@ public class ForTrans {
         this.transType = transType;
         this.sentence = sentence;
     }
+
+    public ForTrans(ForTransKtoERequestDto KtoEDto){
+        transType = 1;
+        this.sentence = KtoEDto.getSentence();
+    }
+
+    public ForTrans(ForTransEtoKRequestDto EtoKDto){
+        transType = 2;
+        this.sentence = EtoKDto.getSentence();
+    }
+
 
     public String incoding(ApiKey apiKey) {
 

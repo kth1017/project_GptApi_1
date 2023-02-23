@@ -1,4 +1,4 @@
-package fadet.P3_GptApi.web.dto;
+package fadet.P3_GptApi.web.dto.requestDto;
 
 import fadet.P3_GptApi.domain.forTrans.ForTrans;
 import lombok.Getter;

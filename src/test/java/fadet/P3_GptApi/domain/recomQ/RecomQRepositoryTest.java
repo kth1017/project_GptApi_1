@@ -12,7 +12,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class RecomQRepositoryTest {
-    @Autowired RecomQRepository repository;
+    @Autowired
+    RecomQRepository repository;
 
     @Test
     void 추천질문배열반환(){

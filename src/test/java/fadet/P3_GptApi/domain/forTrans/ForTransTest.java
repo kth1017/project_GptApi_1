@@ -1,8 +1,8 @@
 package fadet.P3_GptApi.domain.forTrans;
 
 import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.web.dto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,12 +17,12 @@ class ForTransTest {
     ApiKey apiKey;
 
     @Test
-    void dao승격() {
+    void KtoEdao생성() {
         //given
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요");
 
         //when
-        ForTrans newDao = dto.toDao(dto.getSentence());
+        ForTrans newDao = new ForTrans(dto);
 
         //then
         assertThat(newDao.getSentence()).isEqualTo("안녕하세요");

@@ -3,7 +3,7 @@ package fadet.P3_GptApi.web;
 
 import fadet.P3_GptApi.service.PapagoService;
 import fadet.P3_GptApi.service.RecomQService;
-import fadet.P3_GptApi.web.dto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import fadet.P3_GptApi.web.dto.RequestRQ2Dto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,25 +1,12 @@
 package fadet.P3_GptApi.domain.forTrans;
 
-import org.springframework.stereotype.Repository;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 
-import java.util.HashMap;
-import java.util.Map;
+public interface ForTransRepository {
 
-@Repository
-public class ForTransRepository {
-
-    private static Map<Long, ForTrans> store = new HashMap<>();
-    private static long sequence = 1L;
-
-    public ForTrans save(ForTrans newOne){
-        newOne.setId(sequence++);
-        store.put(newOne.getId(), newOne);
-        return newOne;
-    }
-
-    public ForTrans findLastOne() {
-        Long size = (long)store.size();
-        return store.get(size);
-    }
-
+    public void clear();
+    public ForTrans saveKtoE(ForTransKtoERequestDto KtoEDto);
+    public ForTrans saveEtoK(ForTransEtoKRequestDto EtoKDto);
+    public ForTrans findLastOne();
 }

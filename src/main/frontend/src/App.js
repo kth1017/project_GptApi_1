@@ -83,7 +83,7 @@ function Box() {
                 <Container sx={{ border: 1, padding: 2, borderColor: 'divider' }}>
                     질문 입력 <Form></Form>
                     추천 질문 <br />
-                    <ButtonGroup><ButtonForm></ButtonForm></ButtonGroup>
+                    <ButtonForm></ButtonForm>
                 </Container>
                 <Container sx={{ border: 1, padding: 2, borderColor: 'divider' }}>
                     번역 <TransForm></TransForm>
@@ -176,10 +176,9 @@ function ButtonForm(props) {
             return result;    
     }
     return <>
-        <div>{grouping()}</div>
-        <div>{grouping2()}</div>
+        Category <ButtonGroup>{grouping()}</ButtonGroup><br /><br />
+        details <ButtonGroup>{grouping2()}</ButtonGroup>
     </>
-
 }
 
 function TransForm(props) {
