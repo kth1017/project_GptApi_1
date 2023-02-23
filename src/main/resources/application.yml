@@ -6,10 +6,13 @@ spring:
     username: sa
     password:
     driver-class-name: org.h2.Driver
+    initialization-mode: always
+    platform: h2
+    data: classpath:data.sql
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
         show_sql: true
-        format_sql: true
+        format_sql: false

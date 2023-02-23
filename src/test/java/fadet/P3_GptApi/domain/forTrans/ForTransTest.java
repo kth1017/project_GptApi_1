@@ -32,7 +32,7 @@ class ForTransTest {
     void incoding테스트_타입1() {
         //given
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
-        ForTrans newDao = dto.toDao(dto.getSentence());
+        ForTrans newDao = dto.toDomain();
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
 
 

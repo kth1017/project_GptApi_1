@@ -10,3 +10,5 @@
 
 6 [시작 테스트] repository clear시 sequence도 초기화해줄것
 
+6 [시작 테스트] @Query작성시 기준은 테이블이 아닌 객체 > a_title이 아닌 aTitle
+

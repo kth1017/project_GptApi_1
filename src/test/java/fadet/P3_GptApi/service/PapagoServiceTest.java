@@ -14,7 +14,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 class PapagoServiceTest {
 
-    @Autowired ApiKey apiKey;
     @Autowired
     ForTransRepositoryImpl repository;
     @Autowired PapagoService papagoService;

@@ -1,7 +1,6 @@
 package fadet.P3_GptApi.service;
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
-import fadet.P3_GptApi.domain.recomQ.RecomQRepositoryImpl;
-import fadet.P3_GptApi.web.dto.RequestRQ2Dto;
+import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,7 +17,7 @@ public class RecomQService {
         return recomQRepository.getList();
     }
 
-    public void setSmallCateArr(RequestRQ2Dto dto){
+    public void setSmallCateArr(RQ2RequestDto dto){
         recomQRepository.saveCategory(dto.getCategory());
         
     }

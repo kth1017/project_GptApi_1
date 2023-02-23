@@ -2,7 +2,7 @@ package fadet.P3_GptApi.service;
 
 
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
-import fadet.P3_GptApi.web.dto.RequestRQ2Dto;
+import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ class RecomQServiceTest {
     @Test
     void 카테고리설정(){
         //given
-        RequestRQ2Dto dto = new RequestRQ2Dto("java");
+        RQ2RequestDto dto = new RQ2RequestDto("java");
         //when
         service.setSmallCateArr(dto);
         //then
@@ -44,7 +44,7 @@ class RecomQServiceTest {
     @Test
     void 추천질문소분류반환(){
         //given
-        RequestRQ2Dto dto = new RequestRQ2Dto("java");
+        RQ2RequestDto dto = new RQ2RequestDto("java");
         service.setSmallCateArr(dto);
         //when
         String[] details = service.getRecomQ2();

@@ -1,4 +1,4 @@
-package fadet.P3_GptApi.domain.question;
+package fadet.P3_GptApi.domain.entity.question;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +7,6 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 public class Question {

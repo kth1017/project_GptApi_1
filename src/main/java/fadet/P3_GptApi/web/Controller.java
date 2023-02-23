@@ -1,10 +1,12 @@
 package fadet.P3_GptApi.web;
 
 
+import fadet.P3_GptApi.service.GptService;
 import fadet.P3_GptApi.service.PapagoService;
 import fadet.P3_GptApi.service.RecomQService;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
-import fadet.P3_GptApi.web.dto.RequestRQ2Dto;
+import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +20,7 @@ public class Controller {
 
     private final PapagoService papagoService;
     private final RecomQService recomQService;
+    private final GptService gptService;
 
 
 
@@ -41,7 +44,7 @@ public class Controller {
     }
 
     @PostMapping("/api/requestRQ2")
-    public void requestRecomQ2(@RequestBody RequestRQ2Dto dto){
+    public void requestRecomQ2(@RequestBody RQ2RequestDto dto){
         recomQService.setSmallCateArr(dto);
     }
 
@@ -50,7 +53,15 @@ public class Controller {
         return recomQService.getRecomQ2();
     }
 
+    @PostMapping("/api/requestQuestion")
+    public void requestQuestion(@RequestBody QuestionRequestDto dto){
+        gptService.saveQuestion(dto);
+    }
 
+    @GetMapping("/api/responseAnswer")
+    public String responseAnswer(){
+        return gptService.getAnswerContent();
+    }
 
 
 }
