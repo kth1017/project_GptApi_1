@@ -26,7 +26,7 @@ public class GptService {
     }
 
     public String getAnswerContent() {
-        String answerContent = questionToAnswerRepository.getAnswer(questionRepository.findLastOne());
+        String answerContent = questionToAnswerRepository.getAnswer(questionRepository.findLastOne().get(0));
         Answer answer = answerRepository.save(new ToAnswerVO(answerContent).toEntity());
         return answer.getAnswerContent();
     }

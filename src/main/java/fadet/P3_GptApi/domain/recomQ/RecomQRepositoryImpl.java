@@ -1,38 +1,48 @@
 package fadet.P3_GptApi.domain.recomQ;
 
+import fadet.P3_GptApi.domain.forTrans.ForTrans;
+import fadet.P3_GptApi.domain.questionToAnswer.QuestionToAnswer;
 import lombok.Getter;
 import org.springframework.stereotype.Repository;
+
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
 @Repository
 public class RecomQRepositoryImpl implements RecomQRepository{
 
-    private static String[] lDataList = {};
-    private static String[] sDataList = {};
-
-    private static String saveCate = "";
+    private static Map<Long, String> categoryStore = new ConcurrentHashMap<>();
+    private static long sequence = 1L;
 
     @Override
+    public void clear() {
+        if(!categoryStore.isEmpty()){
+            categoryStore.clear();
+            sequence = 1L;
+        }
+    }
+    @Override
     public void saveCategory(String c){
-        saveCate = c;
+        categoryStore.put(sequence++, c);
     }
     @Override
     public String getSavedCategory() {
-        return saveCate;
+        Long size = (long)categoryStore.size();
+        return categoryStore.get(size);
     }
     @Override
     public String[] getList(){
         RecomQ recomQ = new RecomQ();
-        lDataList = recomQ.getLData();
-        return lDataList;
+        return recomQ.getLData();
 
     }
     @Override
     public String[] getSList(){
+        Long size = (long)categoryStore.size();
         RecomQ recomQ = new RecomQ();
-        recomQ.setCategory(saveCate);
-        sDataList = recomQ.getSList();
-        return sDataList;
+        recomQ.setCategory(categoryStore.get(size));
+        return recomQ.getSList();
     }
 
 }

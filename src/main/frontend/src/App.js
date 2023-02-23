@@ -191,11 +191,11 @@ function TransForm(props) {
         const LocalTransQ = event.target.transQ.value;
             event.preventDefault();
 
-            axios.post('/request',
-                {originQ: `${LocalTransQ}`})
+            axios.post('/api/requestQuestion',
+                            {questionContent: `${LocalTransQ}`})
                 .then(function (response) {
 
-                    axios.get('/api/sendQ')
+                    axios.get('/api/responseAnswer')
                         .then(response => {
                         setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'))
                          })

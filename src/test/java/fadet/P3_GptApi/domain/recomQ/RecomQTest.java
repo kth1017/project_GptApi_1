@@ -10,7 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ExtendWith(SpringExtension.class)
 class RecomQTest {
     @Test
-    void 질문저장(){
+    void Category리스트get(){
         //given
         RecomQ recomQ = new RecomQ();
         //when
@@ -19,5 +19,4 @@ class RecomQTest {
         //then
         Assertions.assertThat(largeCate[0]).isEqualTo("java");
     }
-
 }

@@ -13,7 +13,7 @@ public class ForTransEtoKRequestDto {
         this.transType = 2;
     }
 
-    public ForTrans toDao(String sentence){
+    public ForTrans toDomain(){
         return new ForTrans(sentence, transType);
     }
 }

@@ -9,4 +9,5 @@ public interface ForTransRepository {
     public ForTrans saveKtoE(ForTransKtoERequestDto KtoEDto);
     public ForTrans saveEtoK(ForTransEtoKRequestDto EtoKDto);
     public ForTrans findLastOne();
+    public String getTranslatedText();
 }

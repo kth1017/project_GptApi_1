@@ -4,7 +4,6 @@ import fadet.P3_GptApi.domain.forTrans.ForTrans;
 import fadet.P3_GptApi.domain.forTrans.ForTransRepository;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
-import fadet.P3_GptApi.web.dto.responseDto.ForTransKtoEResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,16 +23,6 @@ public class PapagoService {
     }
 
     public String transKtoE() {
-        ForTrans lastOne = repository.findLastOne();
-        return new ForTransKtoEResponseDto(lastOne.incoding(apiKey)).getTranslatedText();
+        return repository.getTranslatedText();
     }
-
-
-
-    public String transEntoKo(ForTransEtoKRequestDto dto) {
-        ForTrans forTransDao = dto.toDao(dto.getSentence());
-        return forTransDao.incoding(apiKey);
-    }
-
-
 }

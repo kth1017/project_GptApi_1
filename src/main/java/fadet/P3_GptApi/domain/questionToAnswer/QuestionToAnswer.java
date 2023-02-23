@@ -2,6 +2,7 @@ package fadet.P3_GptApi.domain.questionToAnswer;
 
 import fadet.P3_GptApi.ApiKey;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -9,9 +10,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
-@Getter
+//리포지토리때문에 setter 추가 > 수정 후엔 반드시 제거할 것
+@Getter @Setter
 public class QuestionToAnswer {
+    private Long id;
     private String question;
     private String answer;
 

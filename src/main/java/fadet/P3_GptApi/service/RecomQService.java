@@ -12,7 +12,7 @@ public class RecomQService {
 
     private final RecomQRepository recomQRepository;
 
-    // 기능 추가시 변경되어 임시로 dto를 사용하지 않고 제작
+    // 기능 추가시 변경되어 임시로 dto를 사용하지 않고 작성
     public String[] getRecomQ() {
         return recomQRepository.getList();
     }
@@ -21,7 +21,7 @@ public class RecomQService {
         recomQRepository.saveCategory(dto.getCategory());
         
     }
-
+    // 기능 추가시 변경되어 임시로 dto를 사용하지 않고 작성
     public String[] getRecomQ2(){
         return recomQRepository.getSList();
     }

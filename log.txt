@@ -12,3 +12,6 @@
 
 6 [시작 테스트] @Query작성시 기준은 테이블이 아닌 객체 > a_title이 아닌 aTitle
 
+7 ! [답변] jpql의 LIMIT, TOP, FETCH 다 h2 DB에선 인식 안해서 일단은 list.get(0)으로 서비스에서 처리했음
+
+8 [테스트 작성] 4xx에러 실패 테스트로는 url 잘못 작성함

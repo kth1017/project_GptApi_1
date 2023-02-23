@@ -22,7 +22,7 @@ class ForTransTest {
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요");
 
         //when
-        ForTrans newDao = new ForTrans(dto);
+        ForTrans newDao = dto.toDomain();
 
         //then
         assertThat(newDao.getSentence()).isEqualTo("안녕하세요");
@@ -47,7 +47,7 @@ class ForTransTest {
     void incoding테스트_타입2() {
         //given
         ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("Hello.");
-        ForTrans newDao = dto.toDao(dto.getSentence());
+        ForTrans newDao = dto.toDomain();
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"en\",\"tarLangType\":\"ko\",\"translatedText\":\"안녕하세요.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
 
         //when

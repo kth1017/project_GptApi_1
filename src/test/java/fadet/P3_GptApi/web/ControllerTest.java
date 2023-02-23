@@ -52,7 +52,7 @@ class ControllerTest {
     }
 
     @Test
-    public void post_번역할첫질문get() throws Exception {
+    public void post_번역할첫질문take() throws Exception {
         //given
         String sentence = "안녕하세요.";
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto(sentence);
@@ -80,7 +80,7 @@ class ControllerTest {
 
 
     @Test
-    public void get_번역된문장give_url오류_실패() throws Exception {
+    public void get_번역된문장give_url오류_실패4xx() throws Exception {
         //given
         forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
         String url = "http://localhost:8080/api/";
@@ -92,9 +92,9 @@ class ControllerTest {
     }
 
     @Test
-    public void get_추천질문리스트give() throws Exception {
+    public void get_추천질문리스트give_성공() throws Exception {
         //given
-        String url = "http://localhost:8080/requestRQ";
+        String url = "http://localhost:8080/api/requestRQ";
 
         //when
         //then
@@ -105,7 +105,18 @@ class ControllerTest {
     }
 
     @Test
-    public void post_카테고리get() throws Exception {
+    public void get_추천질문리스트give_실패4xx() throws Exception {
+        //given
+        String url = "http://localhost:8080/requestRQ";
+
+        //when
+        //then
+        mvc.perform(get(url))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_카테고리take() throws Exception {
         //given
         String categoty = "java";
         RQ2RequestDto dto = new RQ2RequestDto(categoty);
@@ -120,7 +131,7 @@ class ControllerTest {
     }
 
     @Test
-    public void get_소분류리스트give_isOk() throws Exception {
+    public void get_소분류리스트give_성공() throws Exception {
         //given
         recomQRepository.saveCategory("js");
         String url = "http://localhost:8080/api/responseRQ2";
@@ -145,11 +156,11 @@ class ControllerTest {
                         .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isOk());
         //then
-        assertThat(questionRepository.findLastOne()).isEqualTo("what is java?");
+        assertThat(questionRepository.findLastOne().get(0)).isEqualTo("what is java?");
     }
 
     @Test
-    public void get_gpt답변give_isOk() throws Exception {
+    public void get_gpt답변give_성공() throws Exception {
         //given
         gptService.saveQuestion(new QuestionRequestDto("What is java."));
         String url = "http://localhost:8080/api/responseAnswer";
