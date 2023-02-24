@@ -1,11 +1,10 @@
 package fadet.P3_GptApi.service;
 
-import fadet.P3_GptApi.ApiKey;
 import fadet.P3_GptApi.domain.entity.answer.Answer;
 import fadet.P3_GptApi.domain.entity.answer.AnswerRepository;
+import fadet.P3_GptApi.domain.entity.question.Question;
 import fadet.P3_GptApi.domain.entity.question.QuestionRepository;
 import fadet.P3_GptApi.domain.questionToAnswer.QuestionToAnswerRepository;
-import fadet.P3_GptApi.vO.ToAnswerVO;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,8 +25,9 @@ public class GptService {
     }
 
     public String getAnswerContent() {
-        String answerContent = questionToAnswerRepository.getAnswer(questionRepository.findLastOne().get(0));
-        Answer answer = answerRepository.save(new ToAnswerVO(answerContent).toEntity());
+        Question question = questionRepository.findLastOne().get(0);
+        String answerContent = questionToAnswerRepository.getAnswer(question.getQuestionContent());
+        Answer answer = Answer.createAnswer(question, answerContent);
         return answer.getAnswerContent();
     }
 }

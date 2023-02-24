@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
 public class Answer {
@@ -27,7 +26,7 @@ public class Answer {
     @Column(nullable = false, length = 1000)
     private String answerContent;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "question_id")
     private Question question;
 
@@ -35,13 +34,19 @@ public class Answer {
         this.answerContent = answerContent;
     }
 
-
     /* 연관관계
-        메서드
-     */
+            메서드
+         */
     public void setQuestion(Question question) {
         this.question = question;
         question.setAnswer(this);
+    }
+
+    public static Answer createAnswer(Question question, String answerContent){
+        Answer answer = new Answer(answerContent);
+        answer.setQuestion(question);
+        return answer;
+
     }
 
 }

@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface QuestionRepository extends JpaRepository<Question, Long>{
-    @Query("SELECT q.questionContent FROM Question q ORDER BY q.id DESC")
-    List<String> findLastOne();
+    @Query("SELECT q FROM Question q ORDER BY q.id DESC")
+    List<Question> findLastOne();
 }

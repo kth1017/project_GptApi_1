@@ -40,8 +40,7 @@ public class RecomQRepositoryImpl implements RecomQRepository{
     @Override
     public String[] getSList(){
         Long size = (long)categoryStore.size();
-        RecomQ recomQ = new RecomQ();
-        recomQ.setCategory(categoryStore.get(size));
+        RecomQ recomQ = new RecomQ(categoryStore.get(size));
         return recomQ.getSList();
     }
 

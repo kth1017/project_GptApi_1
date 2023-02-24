@@ -14,9 +14,8 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
-//리포지토리때문에 setter 추가 > 수정 후엔 반드시 제거할 것
+//Id 때문에 setId 추가
 @Getter
-@Setter
 public class ForTrans {
     private Long id;
 
@@ -26,6 +25,10 @@ public class ForTrans {
     public ForTrans(String sentence, int transType) {
         this.sentence = sentence;
         this.transType = transType;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String incoding(ApiKey apiKey) {

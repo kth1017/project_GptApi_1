@@ -153,9 +153,9 @@ function ButtonForm(props) {
                                         {category: `${qArr[i]}`})
                                     .then(response => {
                                         console.log(response);
-                                        axios.get('/api/responseRQ2')
-                                        .then(response => setQ2Arr(response.data))
-                                        .catch(error => console.log(error))    
+
+                                        setQ2Arr(response.data);
+
                                     })
                                     .catch(error =>{console.log(error)});
                         setTransQ(`What is the ${qArr[i]}?`);

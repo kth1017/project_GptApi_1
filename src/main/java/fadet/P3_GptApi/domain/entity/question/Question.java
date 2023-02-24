@@ -8,9 +8,9 @@ import lombok.Setter;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @Entity
 @NoArgsConstructor
+// 연관관게메서드 작성으로 인해 setAnswer을 열어둠
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,9 +19,12 @@ public class Question {
     @Column(nullable = false)
     private String questionContent;
 
-    @OneToOne(mappedBy = "question")
+    @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
     private Answer answer;
 
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
+    }
 
     public Question(String questionContent) {
         this.questionContent = questionContent;

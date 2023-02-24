@@ -1,10 +1,12 @@
 package fadet.P3_GptApi.domain.recomQ;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 
-@Getter @Setter
+@Getter
+@NoArgsConstructor
 public class RecomQ {
     private String[] lData = {"java","spring", "js", "react", "DOM" ,"DBMS", "OOP"};
     private String category = "";
@@ -17,6 +19,11 @@ public class RecomQ {
     private String[] OOPSData = {"object", "encapsulation", "inheritance", "polymorphism","mariaDB", "PostgreSQL", "oracle"};
 
     private String[] dummy = {" "};
+
+
+    public RecomQ(String category) {
+        this.category = category;
+    }
 
     public String[] getSList(){
         if (category.equals("java")) {

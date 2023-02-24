@@ -24,7 +24,7 @@ class QuestionToAnswerRepositoryTest {
         QRepository.save(new Question("what is java?"));
         QRepository.save(new Question("what is js?"));
         //when
-        String answer = QtoARepository.getAnswer(QRepository.findLastOne().get(0));
+        String answer = QtoARepository.getAnswer(QRepository.findLastOne().get(0).getQuestionContent());
         //then
         assertThat(answer).contains("JavaScript");
     }

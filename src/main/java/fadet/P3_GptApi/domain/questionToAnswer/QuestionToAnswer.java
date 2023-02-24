@@ -10,8 +10,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-//리포지토리때문에 setter 추가 > 수정 후엔 반드시 제거할 것
-@Getter @Setter
+//Id 때문에 setId 추가
+@Getter
 public class QuestionToAnswer {
     private Long id;
     private String question;
@@ -22,9 +22,13 @@ public class QuestionToAnswer {
         this.answer = incoding(apikey);
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     /*
-         내장 함수
-          */
+             내장 함수
+              */
     public String incoding(ApiKey apiKey) {
 
         String clientId = apiKey.getGptSecret();
