@@ -200,7 +200,7 @@ function TransForm(props) {
                         setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'))
                          })
                         .catch(error => console.log(error));
-                        setTransQ(LocalTransQ);
+
                 })
                 .catch(error => {console.log(error)});
             }}>

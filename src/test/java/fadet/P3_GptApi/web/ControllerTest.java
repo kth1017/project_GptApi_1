@@ -2,6 +2,7 @@ package fadet.P3_GptApi.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import fadet.P3_GptApi.domain.entity.answer.AnswerRepository;
 import fadet.P3_GptApi.domain.entity.question.QuestionRepository;
 import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
@@ -37,6 +38,9 @@ class ControllerTest {
     @Autowired
     QuestionRepository questionRepository;
 
+    @Autowired
+    AnswerRepository answerRepository;
+
 
 
     @Autowired
@@ -49,6 +53,18 @@ class ControllerTest {
     public void setup() {
         mvc = MockMvcBuilders.standaloneSetup(controller)
                 .build();
+    }
+
+    @Test
+    public void url잘못작성_통신실패4xx() throws Exception {
+        //given
+        forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
+        String url = "http://localhost:8080/api/";
+        //when
+        //then
+        mvc.perform(get(url))
+                .andExpect(status().is4xxClientError());
+
     }
 
     @Test
@@ -67,7 +83,7 @@ class ControllerTest {
     }
 
     @Test
-    public void get_번역된문장give_isOk() throws Exception {
+    public void get_번역된문장give_성공() throws Exception {
         //given
         forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
         String url = "http://localhost:8080/api/responseTransKE";
@@ -76,19 +92,6 @@ class ControllerTest {
         mvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").exists());
-    }
-
-
-    @Test
-    public void get_번역된문장give_url오류_실패4xx() throws Exception {
-        //given
-        forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
-        String url = "http://localhost:8080/api/";
-        //when
-        //then
-        mvc.perform(get(url))
-                .andExpect(status().is4xxClientError());
-
     }
 
     @Test
@@ -102,17 +105,6 @@ class ControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]", is("java")))
                 .andExpect(jsonPath("$[1]", is("spring")));
-    }
-
-    @Test
-    public void get_추천질문리스트give_실패4xx() throws Exception {
-        //given
-        String url = "http://localhost:8080/requestRQ";
-
-        //when
-        //then
-        mvc.perform(get(url))
-                .andExpect(status().is4xxClientError());
     }
 
     @Test

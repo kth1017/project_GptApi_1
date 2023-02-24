@@ -15,3 +15,5 @@
 7 ! [답변] jpql의 LIMIT, TOP, FETCH 다 h2 DB에선 인식 안해서 일단은 list.get(0)으로 서비스에서 처리했음
 
 8 [테스트 작성] 4xx에러 실패 테스트로는 url 잘못 작성함
+
+9 [답변] 질문과 답변 사이 시간 차이때문에 concurrentHashmap 사용, 로딩 시간 넣을 예정
