@@ -24,7 +24,7 @@ public class QuestionRepositoryTest {
         //when
 
         //then
-        assertThat(repository.findLastOne().get(0)).isEqualTo("질문2");
+        assertThat(repository.findLastOne().get(0).getQuestionContent()).isEqualTo("질문2");
 
     }
 }

@@ -8,6 +8,7 @@ import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
 import fadet.P3_GptApi.service.GptService;
 import fadet.P3_GptApi.service.PapagoService;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
@@ -135,26 +136,16 @@ class ControllerTest {
     @Test
     public void post_ai답변한글로번역() throws Exception {
         //given
-        String sentence = "what is java?";
-        QuestionRequestDto dto = new QuestionRequestDto(sentence);
-        String url = "http://localhost:8080/api/requestQuestion";
+        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("java is good.");;
+        String url = "http://localhost:8080/api/requestTransEK";
         //when
         //then
-        // 첫번째 요청 - 성공
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.object").value("text_completion"))
-                .andReturn();
+                .andExpect(jsonPath("$.message").exists());
 
-        assertThat(questionRepository.findLastOne().get(0).getQuestionContent()).isEqualTo("what is java?");
-        // 두번째 요청 - error string 반환
-        mvc.perform(post(url)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(new ObjectMapper().writeValueAsString(dto)))
-                .andExpect(status().isOk())
-                .andExpect(content().string("Error:TOO MANY REQUEST"))
-                .andReturn();
+        assertThat(forTransRepository.findLastOne().getSentence()).isEqualTo("java is good.");
     }
 }
