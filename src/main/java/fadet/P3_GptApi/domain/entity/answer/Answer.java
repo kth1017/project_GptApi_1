@@ -23,7 +23,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "answer_id")
     private Long id;
-    @Column(nullable = false, length = 1000)
+    @Column(nullable = false, length = 2000)
     private String answerContent;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -34,13 +34,8 @@ public class Answer {
         this.answerContent = answerContent;
     }
 
-    /* 연관관계
-            메서드
+    /* 생성 메서드
          */
-    public void setQuestion(Question question) {
-        this.question = question;
-        question.setAnswer(this);
-    }
 
     public static Answer createAnswer(Question question, String answerContent){
         Answer answer = new Answer(answerContent);
@@ -48,6 +43,15 @@ public class Answer {
         return answer;
 
     }
+
+    /* 연관관계메서드
+         */
+    public void setQuestion(Question question) {
+        this.question = question;
+        question.setAnswer(this);
+    }
+
+
 
 }
 

@@ -4,12 +4,12 @@ package fadet.P3_GptApi.web;
 import fadet.P3_GptApi.service.GptService;
 import fadet.P3_GptApi.service.PapagoService;
 import fadet.P3_GptApi.service.RecomQService;
+import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
-import io.github.bucket4j.Refill;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,28 +26,14 @@ public class Controller {
     private final PapagoService papagoService;
     private final RecomQService recomQService;
     private final GptService gptService;
-
-
-    Bandwidth secLimit2 = Bandwidth.simple(1,Duration.ofSeconds(10));
-
+    //서버용 rate limit
     Bucket bucket2 = Bucket.builder()
-            .addLimit(secLimit2)
+            .addLimit(Bandwidth.simple(1,Duration.ofSeconds(10)))
             .build();
 
-
-
     @PostMapping("/api/requestTransKE")
-    public void requestTransKtoE(@RequestBody ForTransKtoERequestDto dto){
-
-        String s = papagoService.saveKtoE(dto);
-        System.out.println(s);
-
-    }
-
-    @GetMapping("/api/responseTransKE")
-    public String responseTransKtoE(){
-        System.out.println(papagoService.transKtoE());
-        return papagoService.transKtoE();
+    public String  requestTransKtoE(@RequestBody ForTransKtoERequestDto dto){
+        return papagoService.transKtoE(dto);
     }
 
     @GetMapping("/api/requestRQ")
@@ -64,19 +50,16 @@ public class Controller {
 
     @PostMapping("/api/requestQuestion")
     public String requestQuestion(@RequestBody QuestionRequestDto dto){
-
-            gptService.saveQuestion(dto);
-            return "is_ok";}
-
-
-    @GetMapping("/api/responseAnswer")
-    public String responseAnswer(){
         if(bucket2.tryConsume(1)){
+            gptService.saveQuestion(dto);
             return gptService.getAnswerContent();
         }
-        System.out.println("TOO MANY REQUEST2");
-        return "Error";
+        return "Error:TOO MANY REQUEST";
     }
 
+    @PostMapping(value="/api/requestTransEK", produces="text/plain;charset=UTF-8")
+    public String requestTransEK(@RequestBody ForTransEtoKRequestDto dto){
+        return papagoService.transEtoK(dto);
+    }
 
 }

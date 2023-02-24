@@ -16,7 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class GptService {
 
     private final QuestionRepository questionRepository;
-    private final AnswerRepository answerRepository;
     private final QuestionToAnswerRepository questionToAnswerRepository;
 
 

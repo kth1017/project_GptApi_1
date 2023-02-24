@@ -22,12 +22,12 @@ public class Question {
     @OneToOne(mappedBy = "question", cascade = CascadeType.ALL)
     private Answer answer;
 
-    public void setAnswer(Answer answer) {
-        this.answer = answer;
-    }
-
     public Question(String questionContent) {
         this.questionContent = questionContent;
+    }
+
+    public void setAnswer(Answer answer) {
+        this.answer = answer;
     }
 }
 

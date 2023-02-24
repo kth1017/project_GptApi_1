@@ -107,16 +107,13 @@ function Form(props) {
         event.preventDefault();
         const originQ = event.target.originQ.value;
         axios.post('/api/requestTransKE',
-                    {sentence: `${originQ}`})
-                  .then(function (response) {
-                    console.log(response);
-                    axios.get('/api/responseTransKE')
-                    .then(response => {setTransQ(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
-                                        })
-                    .catch(error => console.log(error))
-                  })
-                  .catch(function (error) {
-                    console.log(error);});
+                            {sentence: `${originQ}`})
+                          .then(response => {
+                            console.log(response);
+                            setTransQ(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
+                           })
+                          .catch(error => {
+                            console.log(error);});
 
 
 
@@ -185,6 +182,7 @@ function TransForm(props) {
     const [bindingQ, setBindingQ] = useFormState(0);
     const [transQ, setTransQ] = useFormState(1);
     const [resultA, setResultA] = useFormState(2);
+    const [error, setError] = useState('');
 
     console.log("transform 렌더링");
     return <form onSubmit={event => {
@@ -193,20 +191,17 @@ function TransForm(props) {
 
             axios.post('/api/requestQuestion',
                             {questionContent: `${LocalTransQ}`})
-                .then(function (response) {
-
-                    axios.get('/api/responseAnswer')
-                        .then(response => {
-                        setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'))
-                         })
-                        .catch(error => console.log(error));
-
-                })
+                .then(response => {
+                if (response.data.object === 'text_completion') {
+                    setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'));
+                } else setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. ")
+               })
                 .catch(error => {console.log(error)});
             }}>
             <p><Input required type="text" name="transQ" placeholder='영어로 직접 입력 가능' value={transQ||''} onChange={
                     event => {setTransQ(event.target.value);}} /></p>
             <p><Button variant='outlined' type="submit">ai에게 질문</Button></p>
+            <p>에러! {error}</p>
     </form>
 }
 
@@ -216,21 +211,18 @@ function ResultForm() {
     const [resultA, setResultA] = useFormState(2);
     const [transA, setTransA] = useFormState(3);
 
+
     console.log("resultform 렌더링");
     return <form onSubmit={event => {
         event.preventDefault();
         const result = event.target.resultA.value;
-        axios.post('/request',
-                    {originQ: `${result}`})
-                  .then(function (response) {
+        axios.post('/api/requestTransEK',
+                    {sentence: `${result}`})
+                  .then(response => {
                     console.log(response);
-                    axios.get('/api/transQ')
-                    .then(response =>
-                        setTransA(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, "")))
-                    .catch(error => console.log(error));
-                  })
-                  .catch(function (error) {
-                    console.log(error);})
+                    setTransA(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
+                    })
+                  .catch(error => console.log(error))
          }
 
   }>

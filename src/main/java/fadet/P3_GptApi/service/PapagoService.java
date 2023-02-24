@@ -12,17 +12,16 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class PapagoService {
-
-    private final ApiKey apiKey;
     private final ForTransRepository repository;
 
 
-    public String saveKtoE(ForTransKtoERequestDto dto) {
+    public String transKtoE(ForTransKtoERequestDto dto) {
         repository.saveKtoE(dto);
-        return repository.findLastOne().getSentence();
+        return repository.getTranslatedText();
     }
 
-    public String transKtoE() {
+    public String transEtoK(ForTransEtoKRequestDto dto) {
+        repository.saveEtoK(dto);
         return repository.getTranslatedText();
     }
 }

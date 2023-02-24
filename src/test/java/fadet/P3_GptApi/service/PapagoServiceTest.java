@@ -22,27 +22,14 @@ class PapagoServiceTest {
     void clear(){
         repository.clear();
     }
-
-    @Test
-    void KoToEn문장저장(){
-        //given
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
-
-        //when
-        String savedContent = papagoService.saveKtoE(dto);
-
-        //then
-        assertThat(savedContent).isEqualTo("안녕하세요.");
-    }
-
     @Test
     void KoToEn번역요청(){
         //given
-        repository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
+        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
 
         //when
-        String transedContent = papagoService.transKtoE();
+        String transedContent = papagoService.transKtoE(dto);
 
         //then
         assertThat(transedContent).isEqualTo(expectedMessage);

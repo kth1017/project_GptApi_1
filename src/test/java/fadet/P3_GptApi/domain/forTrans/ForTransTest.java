@@ -32,12 +32,12 @@ class ForTransTest {
     void incoding테스트_타입1() {
         //given
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
-        ForTrans newDao = dto.toDomain();
+        ForTrans newDomain = dto.toDomain();
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
 
 
         //when
-        String body = newDao.incoding(apiKey);
+        String body = newDomain.incoding(apiKey);
 
         //then
         assertThat(body).isEqualTo(expectedMessage);
@@ -47,11 +47,11 @@ class ForTransTest {
     void incoding테스트_타입2() {
         //given
         ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("Hello.");
-        ForTrans newDao = dto.toDomain();
+        ForTrans newDomain = dto.toDomain();
         String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"en\",\"tarLangType\":\"ko\",\"translatedText\":\"안녕하세요.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
 
         //when
-        String body = newDao.incoding(apiKey);
+        String body = newDomain.incoding(apiKey);
 
         //then
         assertThat(body).isEqualTo(expectedMessage);

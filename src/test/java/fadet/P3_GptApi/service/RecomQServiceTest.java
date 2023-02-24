@@ -42,7 +42,7 @@ class RecomQServiceTest {
     }
 
     @Test
-    void 추천질문소분류반환(){
+    void 추천질문소분류반환_성공(){
         //given
         RQ2RequestDto dto = new RQ2RequestDto("java");
         service.setSmallCateArr(dto);
@@ -53,5 +53,15 @@ class RecomQServiceTest {
 
     }
 
+    @Test
+    void 추천질문소분류반환_잘못된카테고리_실패(){
+        //given
+        RQ2RequestDto dto = new RQ2RequestDto("C++");
+        service.setSmallCateArr(dto);
+        //when
+        String[] details = service.getRecomQ2();
+        //then
+        Assertions.assertThat(details[0]).isEqualTo(" ");
 
+    }
 }

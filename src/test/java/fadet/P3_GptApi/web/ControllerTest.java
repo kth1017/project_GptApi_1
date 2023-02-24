@@ -38,14 +38,6 @@ class ControllerTest {
     @Autowired
     QuestionRepository questionRepository;
 
-    @Autowired
-    AnswerRepository answerRepository;
-
-
-
-    @Autowired
-    GptService gptService;
-
     private MockMvc mvc;
 
     // WebApplicationContext 사용하여 .setup으로 컨트롤러 묶어서 처리 가능. 컨트롤러 한개라 stand 사용
@@ -68,30 +60,19 @@ class ControllerTest {
     }
 
     @Test
-    public void post_번역할첫질문take() throws Exception {
+    public void post_번역할첫질문답변() throws Exception {
         //given
-        String sentence = "안녕하세요.";
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto(sentence);
+        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
         String url = "http://localhost:8080/api/requestTransKE";
         //when
+        //then
         mvc.perform(post(url)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(dto)))
-                .andExpect(status().isOk());
-        //then
-        assertThat(forTransRepository.findLastOne().getSentence()).isEqualTo("안녕하세요.");
-    }
-
-    @Test
-    public void get_번역된문장give_성공() throws Exception {
-        //given
-        forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
-        String url = "http://localhost:8080/api/responseTransKE";
-        //when
-        //then
-        mvc.perform(get(url))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").exists());
+
+        assertThat(forTransRepository.findLastOne().getSentence()).isEqualTo("안녕하세요.");
     }
 
     @Test
@@ -108,58 +89,72 @@ class ControllerTest {
     }
 
     @Test
-    public void post_카테고리take() throws Exception {
+    public void post_카테고리저장후추천반환_성공() throws Exception {
         //given
-        String categoty = "java";
+        String categoty = "js";
         RQ2RequestDto dto = new RQ2RequestDto(categoty);
         String url = "http://localhost:8080/api/requestRQ2";
         //when
+        //then
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
-                .andExpect(status().isOk());
-        //then
-        assertThat(recomQRepository.getSavedCategory()).isEqualTo("java");
-    }
-
-    @Test
-    public void get_소분류리스트give_성공() throws Exception {
-        //given
-        recomQRepository.saveCategory("js");
-        String url = "http://localhost:8080/api/responseRQ2";
-        //when
-        //then
-        mvc.perform(get(url))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0]", is("sync")))
                 .andExpect(jsonPath("$[2]", is("EC6")));
 
+        assertThat(recomQRepository.getSavedCategory()).isEqualTo("js");
     }
 
     @Test
-    public void post_번역되거나추천된질문get() throws Exception {
+    public void post_번역되거나추천된질문답변_첫요청성공이후실패() throws Exception {
         //given
         String sentence = "what is java?";
         QuestionRequestDto dto = new QuestionRequestDto(sentence);
         String url = "http://localhost:8080/api/requestQuestion";
         //when
+        //then
+        // 첫번째 요청 - 성공
         mvc.perform(post(url)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(new ObjectMapper().writeValueAsString(dto)))
-                .andExpect(status().isOk());
-        //then
-        assertThat(questionRepository.findLastOne().get(0)).isEqualTo("what is java?");
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.object").value("text_completion"))
+                .andReturn();
+
+        assertThat(questionRepository.findLastOne().get(0).getQuestionContent()).isEqualTo("what is java?");
+        // 두번째 요청 - error string 반환
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Error:TOO MANY REQUEST"))
+                .andReturn();
     }
 
     @Test
-    public void get_gpt답변give_성공() throws Exception {
+    public void post_ai답변한글로번역() throws Exception {
         //given
-        gptService.saveQuestion(new QuestionRequestDto("What is java."));
-        String url = "http://localhost:8080/api/responseAnswer";
+        String sentence = "what is java?";
+        QuestionRequestDto dto = new QuestionRequestDto(sentence);
+        String url = "http://localhost:8080/api/requestQuestion";
         //when
         //then
-        mvc.perform(get(url))
+        // 첫번째 요청 - 성공
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.object").value("text_completion"));
+                .andExpect(jsonPath("$.object").value("text_completion"))
+                .andReturn();
+
+        assertThat(questionRepository.findLastOne().get(0).getQuestionContent()).isEqualTo("what is java?");
+        // 두번째 요청 - error string 반환
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Error:TOO MANY REQUEST"))
+                .andReturn();
     }
 }
