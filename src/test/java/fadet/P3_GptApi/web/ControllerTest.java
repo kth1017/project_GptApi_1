@@ -29,7 +29,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 class ControllerTest {
-
+ 
     @Autowired
     Controller controller;
     @Autowired
@@ -61,7 +61,7 @@ class ControllerTest {
     }
 
     @Test
-    public void post_번역할첫질문답변() throws Exception {
+    public void post_번역할첫질문답변_성공() throws Exception {
         //given
         ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
         String url = "http://localhost:8080/api/requestTransKE";
@@ -74,6 +74,37 @@ class ControllerTest {
                 .andExpect(jsonPath("$.message").exists());
 
         assertThat(forTransRepository.findLastOne().getSentence()).isEqualTo("안녕하세요.");
+    }
+
+    @Test
+    public void post_번역할첫질문답변_NULLor빈값전달_실패() throws Exception {
+        //given
+        ForTransKtoERequestDto dto = new ForTransKtoERequestDto(" ");
+        String url = "http://localhost:8080/api/requestTransKE";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_번역할첫질문답변_너무김_실패() throws Exception {
+        //given
+        //테스트기에 버퍼 대신 빌더 사용
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 200; i++) {
+            sb.append("가");
+        }
+        ForTransKtoERequestDto dto = new ForTransKtoERequestDto(sb.toString());
+        String url = "http://localhost:8080/api/requestTransKE";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
     }
 
     @Test
@@ -108,7 +139,21 @@ class ControllerTest {
     }
 
     @Test
-    public void post_번역되거나추천된질문답변_첫요청성공이후실패() throws Exception {
+    public void post_카테고리저장후추천반환_빈값_실패() throws Exception {
+        //given
+        String categoty = "python";
+        RQ2RequestDto dto = new RQ2RequestDto(categoty);
+        String url = "http://localhost:8080/api/requestRQ2";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_번역되거나추천된질문답변_첫요청성공_이후실패() throws Exception {
         //given
         String sentence = "what is java?";
         QuestionRequestDto dto = new QuestionRequestDto(sentence);
@@ -134,7 +179,39 @@ class ControllerTest {
     }
 
     @Test
-    public void post_ai답변한글로번역() throws Exception {
+    public void post_번역되거나추천된질문답변_Nullor빈값_실패() throws Exception {
+        //given
+        String sentence = "  ";
+        QuestionRequestDto dto = new QuestionRequestDto(sentence);
+        String url = "http://localhost:8080/api/requestQuestion";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_번역되거나추천된질문답변_너무김_실패() throws Exception {
+        //given
+        //테스트기에 버퍼 대신 빌더 사용
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 30001; i++) {
+            sb.append("a");
+        }
+        QuestionRequestDto dto = new QuestionRequestDto(sb.toString());
+        String url = "http://localhost:8080/api/requestQuestion";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_ai답변한글로번역_성공() throws Exception {
         //given
         ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("java is good.");;
         String url = "http://localhost:8080/api/requestTransEK";
@@ -147,5 +224,36 @@ class ControllerTest {
                 .andExpect(jsonPath("$.message").exists());
 
         assertThat(forTransRepository.findLastOne().getSentence()).isEqualTo("java is good.");
+    }
+
+    @Test
+    public void post_ai답변한글로번역_Nullor빈값_실패_() throws Exception {
+        //given
+        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("  ");;
+        String url = "http://localhost:8080/api/requestTransEK";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
+    }
+
+    @Test
+    public void post_ai답변한글로번역_너무김_실패() throws Exception {
+        //given
+        //테스트기에 버퍼 대신 빌더 사용
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 30001; i++) {
+            sb.append("a");
+        }
+        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto(sb.toString());;
+        String url = "http://localhost:8080/api/requestTransEK";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect(status().is4xxClientError());
     }
 }

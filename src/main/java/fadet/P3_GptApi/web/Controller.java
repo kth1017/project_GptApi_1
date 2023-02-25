@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.time.Duration;
 
 
@@ -32,7 +33,7 @@ public class Controller {
             .build();
 
     @PostMapping("/api/requestTransKE")
-    public String  requestTransKtoE(@RequestBody ForTransKtoERequestDto dto){
+    public String  requestTransKtoE(@RequestBody @Valid ForTransKtoERequestDto dto){
         return papagoService.transKtoE(dto);
     }
 
@@ -43,13 +44,13 @@ public class Controller {
 
     //수정요
     @PostMapping("/api/requestRQ2")
-    public String[] requestRecomQ2(@RequestBody RQ2RequestDto dto){
+    public String[] requestRecomQ2(@RequestBody @Valid RQ2RequestDto dto){
         recomQService.setSmallCateArr(dto);
         return recomQService.getRecomQ2();
     }
 
     @PostMapping("/api/requestQuestion")
-    public String requestQuestion(@RequestBody QuestionRequestDto dto){
+    public String requestQuestion(@RequestBody @Valid QuestionRequestDto dto){
         if(bucket2.tryConsume(1)){
             gptService.saveQuestion(dto);
             return gptService.getAnswerContent();
@@ -58,7 +59,7 @@ public class Controller {
     }
 
     @PostMapping(value="/api/requestTransEK", produces="text/plain;charset=UTF-8")
-    public String requestTransEK(@RequestBody ForTransEtoKRequestDto dto){
+    public String requestTransEK(@RequestBody @Valid ForTransEtoKRequestDto dto){
         return papagoService.transEtoK(dto);
     }
 
