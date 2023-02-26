@@ -30,24 +30,14 @@ class RecomQServiceTest {
         assertThat(list[0]).isEqualTo("java");
     }
 
-    @Test
-    void 카테고리설정(){
-        //given
-        RQ2RequestDto dto = new RQ2RequestDto("java");
-        //when
-        service.setSmallCateArr(dto);
-        //then
-        Assertions.assertThat(repository.getSavedCategory()).isEqualTo("java");
-
-    }
+    
 
     @Test
     void 추천질문소분류반환_성공(){
         //given
         RQ2RequestDto dto = new RQ2RequestDto("java");
-        service.setSmallCateArr(dto);
         //when
-        String[] details = service.getRecomQ2();
+        String[] details = service.getRecomQ2(dto);
         //then
         Assertions.assertThat(details[0]).isEqualTo("jdk");
 
@@ -57,9 +47,8 @@ class RecomQServiceTest {
     void 추천질문소분류반환_잘못된카테고리_실패(){
         //given
         RQ2RequestDto dto = new RQ2RequestDto("C++");
-        service.setSmallCateArr(dto);
         //when
-        String[] details = service.getRecomQ2();
+        String[] details = service.getRecomQ2(dto);
         //then
         Assertions.assertThat(details[0]).isEqualTo(" ");
 

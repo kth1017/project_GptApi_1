@@ -19,23 +19,11 @@ class GptServiceTest {
     QuestionRepository repository;
 
     @Test
-    void 질문저장() {
-        //given
-        QuestionRequestDto dto = new QuestionRequestDto("what is java?");
-        //when
-        service.saveQuestion(dto);
-        //then
-        // findBy는 null방지를 위해 optional이용
-        assertThat(repository.findLastOne()).isEqualTo("what is java?");
-    }
-
-    @Test
     void 답변() {
         //given
         QuestionRequestDto dto = new QuestionRequestDto("what is java?");
-        service.saveQuestion(dto);
         //when
-        String answerContent = service.getAnswerContent();
+        String answerContent = service.getAnswerContent(dto);
         //then
         // findBy는 null방지를 위해 optional이용
         assertThat(answerContent).contains("Java is a");

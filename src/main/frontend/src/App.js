@@ -4,47 +4,108 @@ import axios from 'axios';
 import { Container, Grid, Button, ButtonGroup, Input, TextField, Typography } from '@mui/material'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import '@fontsource/roboto/700.css';
-import QuestionAnswerIcon from '@mui/icons-material/QuestionAnswer';
+import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
+import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import Loading from './Loading';
+import { fontFamily } from '@mui/system';
+import './App.css'
+import { blue, blueGrey } from '@mui/material/colors';
+
+
 
 
 
 const ModContext = React.createContext();
 function ModProvider({ children }) {
-  const modState = useState(true);
+  const modState = useState([, ]);
   return <ModContext.Provider value={modState}>
          {children}
         </ModContext.Provider>;
 }
-function useModState() {
-  const value = useContext(ModContext);
-  if (value === undefined) {
-    throw new Error('error')
-
-    }   return value;
+function useModState(putIndex) {
+      const value = useContext(ModContext);
+      if (value === undefined) throw new Error('error');
+        const index = putIndex;
+        return [ value[0][index],
+          (newValue) => {
+            const newArray = [...value[0]];
+            newArray[index] = newValue;
+            value[1](newArray);
+          },];
 }
 
     function CustomDial(props){
-        const [mod, setMod] = useModState();
-        const Mfalse = () => setMod(false);
+        const [mod, setMod] = useModState(1);
         return <Dialog open={mod}>
-        <DialogTitle>사용법</DialogTitle>
+        <DialogTitle>도움말</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    1. ai에게 할 질문이 한글이라면 번역을 위한 한글 질문을 입력해주시거나 추천 질문 버튼을 눌러주세요.<br />
-                    2. 번역된 질문 또는 직접 입력한 영어 질문이 'ai에게 질문하기' 버튼을 누르시면 아래에 답변이 출력됩니다.
+                    <Typography variant='h6' sx={{color:'#FF0000'}}>#우선 알아야할 사항</Typography>
+                    - Gpt ai는 한글 질문을 받을 경우 답변이 다소 느릴 수 있습니다.<br />
+                    그렇기 때문에 한글로 질문하실 때 불가피한 경우(코드에 한글 포함, 번역이 안되는 한글 질문)
+                    가 아니라면 1번 과정을 진행해주세요.<br />
+                    - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br /><br />
+
+
+                    1. 번역이 가능한 한글 질문을 하실 예정이시라면 아래 그림처럼 질문을 작성한 뒤
+                    번역 버튼을 눌러주세요. 질문은 100자까지 허용합니다.<br />
+                    <img src={require("./assets/pictures/번역.png")} /><br /><br />
+                    2. 궁금하신 질문이 떠오르시지 않는다면 아래 추천 질문 버튼을 통해 질문 문장을
+                    완성하실 수 있습니다. 먼저 아래처럼 카테고리를 선택하세요.
+                    <img src={require("./assets/pictures/그림1.png")} /><br />
+                    카테고리를 선택하면 아래처럼 상세 질문 버튼 리스트가 출력됩니다.
+                    <img src={require("./assets/pictures/그림3.png")} /><br />
+                    상세 질문 버튼 중 하나를 클릭하시면 다음 탭에서 질문이 자동 완성됩니다.<br /><br />
+                    3. 앞서 번역했거나 추천된 질문이 아래처럼 출력되거나<br />
+                    직접 ai에게할 질문을 입력하신 뒤 버튼을 눌러주세요.<br />
+                    <img src={require("./assets/pictures/그림4.png")} /><br /><br />
+                    4. 버튼을 누르면 아래 그림처럼 로딩 스피너가 나오니 답변이 출력될 때까지 기다려주세요.
+                    요청 중복 방지를 위해 질문은 15초에 한 번으로 제한합니다.
+                    혹시 로딩 스피너가 사라지지 않는다면 정상 요청을 한 번 다시 해주세요.<br />
+                    <img src={require("./assets/pictures/그림5.png")} /><br /><br />
+                    5. 답변이 출력되었을 때 한글로 번역이 필요한 경우 번역 버튼을 눌러주세요.<br />
+                    <img src={require("./assets/pictures/그림6.png")} /><br /><br />
+                    6. 모든 과정이 끝났습니다. 도움말을 다시 보시려면 메인 화면 상단 버튼을 눌러주세요.<br />
+
                 </DialogContentText>
                 <DialogActions>
-                    <Button variant='contained' onClick={Mfalse}>닫기</Button>
+                    <Button variant='contained' onClick={() => setMod(false)}>닫기</Button>
                 </DialogActions>
             </DialogContent>
     </Dialog>
     }
 
+    function CustomQuestionDial(props){
+            const [mod2, setMod2] = useModState(2);
+            return <Dialog open={mod2}>
+            <DialogTitle>질문 예시</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                    # 가급적 프로그래밍 관련 질문만 해주세요. 다른 질문은 직접 gpt ai를 사용하시길 추천합니다.
+                    또한 코드의 예시를 그대로 사용할 경우. 저작권에 대한 불이익을 받을 수 있습니다.<br />
+                    <br />1. 단순 프로그래밍 용어 질문<br />
+                    <img src={require("./assets/pictures/질문1.png")} /><br /><br />
+                    2. 에러 발생시 에러명&코드 질문<br />
+                    <img src={require("./assets/pictures/질문2.png")} /><br /><br />
+                    3. 특정 기능을 구현하는 코드 예시 질문<br />
+                    <img src={require("./assets/pictures/질문3.png")} />
+                    </DialogContentText>
+                    <DialogActions>
+                        <Button variant='contained' onClick={() => setMod2(false)}>닫기</Button>
+                    </DialogActions>
+                </DialogContent>
+        </Dialog>
+        }
+
+
     function DialButton(props){
-        const [mod, setMod] = useModState();
-        const Mtrue = () => setMod(true)
-        return <Button variant='contained' onClick={Mtrue}>도움말 다시열기</Button>
+        const [mod, setMod] = useModState(1);
+        const [mod2, setMod2] = useModState(2);
+        return <>
+        <Button variant='outlined' onClick={() => setMod(true)}>도움말 열기</Button>
+        <Button variant='contained' onClick={() => setMod2(true)}>질문 예시 보기</Button>
+
+        </>
     }
 
 const FormContext = React.createContext();
@@ -73,17 +134,17 @@ function Box() {
     console.log("box 렌더링");
 
     return <>
-        <Container sx={{ border: 1, padding: 2, borderColor: 'divider' }}>
-            질문 입력 <Form></Form>
-            추천 질문 <br />
+        <Container sx={{ m:1 , border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)'}}>
+            <h3>번역이 필요할 경우 질문 입력</h3> <Form></Form>
+            <h3>추천 질문</h3>
             <ButtonForm></ButtonForm>
         </Container>
-        <Container sx={{ border: 1, padding: 2, borderColor: 'divider' }}>
-            번역 <TransForm></TransForm>
+        <Container sx={{ m:1, border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)' }}>
+            <h3>앞에서 번역, 추천되었거나 혹은 직접 입력한 질문 제출</h3>  <TransForm></TransForm>
         </Container>
-        <Container sx={{ border: 1, padding: 2, borderColor: 'divider' }}>
-            답변 <ResultForm></ResultForm>
-            답변 번역 <TransResultForm></TransResultForm>
+        <Container sx={{ m:1, border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)' }}>
+            <h3>Gpt 답변 출력 및 번역 가능</h3>  <ResultForm></ResultForm>
+            <h3>Gpt 번역된 답변</h3> <TransResultForm></TransResultForm>
         </Container>
     </>
 }
@@ -106,11 +167,8 @@ function Form(props) {
                     })
                     .catch(error => {
                     console.log(error);});
-
-
-
             }}>
-            <p><Input required type="text" name="originQ" placeholder='한글로 질문을 입력해주세요' value={bindingQ||""} onChange=
+            <p><Input sx={{width:300}} inputProps={{maxLength:100}} required type="text" name="originQ" placeholder='한글로 질문을 입력해주세요' value={bindingQ||""} onChange=
             {event => {setBindingQ(event.target.value)}} /></p>
             <p><Button variant="outlined" type="submit">번역</Button></p>
         </form>
@@ -164,8 +222,10 @@ function ButtonForm(props) {
             return result;    
     }
     return <>
-        Category <ButtonGroup>{grouping()}</ButtonGroup><br /><br />
-        details <ButtonGroup>{grouping2()}</ButtonGroup>
+        <p>카테고리</p>
+         <ButtonGroup>{grouping()}</ButtonGroup><br /><br />
+         <p>상세 질문</p>
+         <ButtonGroup>{grouping2()}</ButtonGroup>
     </>
 }
 
@@ -191,17 +251,19 @@ function TransForm(props) {
                     setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'));
                     
                 } else {
-                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. ");    
-      
+                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청시 사라집니다.");
+                    window.alert("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
+                    )
+                    
                }})
                 .catch(error => {console.log(error)})
                 .finally(() => {console.log("post 통신 성공")
-                setLoading(false);});
+                                setLoading(false);});
             }}>
-            <p><Input required type="text" name="transQ" placeholder='영어로 직접 입력 가능' value={transQ||''} onChange={
+            <p><Input sx={{width:300}} inputProps={{maxLength:30000}} required type="text" name="transQ" placeholder='영어로 직접 입력 가능' value={transQ||''} onChange={
                     event => {setTransQ(event.target.value);}} /></p>
             <p><Button variant='outlined' type="submit">ai에게 질문</Button></p>
-            <p>{error}</p>
+            <p id="a">{error}</p>
     </form>
     <p>{loading && <Loading />}</p>
     </>
@@ -231,7 +293,7 @@ function ResultForm() {
          }
 
   }>
-    <Input type="text" name="resultA" fullWidth multiline value={resultA||''} onChange={event => {setResultA(event.target.value);}}></Input>
+    <TextField name="resultA" inputProps={{maxLength:30000}} fullWidth multiline value={resultA||''} onChange={event => {setResultA(event.target.value);}} />
     <p><Button variant="outlined" type="submit">번역</Button></p>
     
   </form>
@@ -255,9 +317,9 @@ function App() {
 
             <Container>
                 <ModProvider>
-                <CustomDial></CustomDial><br/>
-                    <QuestionAnswerIcon></QuestionAnswerIcon>
-                    <Typography variant="h4" component="h2">gpt api를 이용한 프로그래밍 질문 웹서비스</Typography>
+                <CustomDial></CustomDial>
+                <CustomQuestionDial></CustomQuestionDial><br/>
+                    <h1>gpt api를 이용한 프로그래밍 질문 웹서비스 <ContactSupportOutlinedIcon sx={{ fontSize:50, color:'#FFFFFF' }} /></h1>
                 <br/>
                 <Container>
                     <ButtonGroup>

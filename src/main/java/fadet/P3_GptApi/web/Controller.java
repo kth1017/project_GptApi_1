@@ -45,15 +45,13 @@ public class Controller {
     //수정요
     @PostMapping("/api/requestRQ2")
     public String[] requestRecomQ2(@RequestBody @Valid RQ2RequestDto dto){
-        recomQService.setSmallCateArr(dto);
-        return recomQService.getRecomQ2();
+        return recomQService.getRecomQ2(dto);
     }
 
     @PostMapping("/api/requestQuestion")
     public String requestQuestion(@RequestBody @Valid QuestionRequestDto dto){
         if(bucket2.tryConsume(1)){
-            gptService.saveQuestion(dto);
-            return gptService.getAnswerContent();
+            return gptService.getAnswerContent(dto);
         }
         return "Error:TOO MANY REQUEST";
     }
