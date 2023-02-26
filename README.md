@@ -1,7 +1,7 @@
 # project_GptApi_1
 GptApi를 이용한 웹서비스 토이 프로젝트
 
-#개요
+# 개요
 react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai질문 웹서비스
 ![image](https://user-images.githubusercontent.com/96664524/221394229-c8e595b7-4350-44b9-b22c-0ab44d492125.png)
 ![image](https://user-images.githubusercontent.com/96664524/221394278-c8740e1e-0d9d-4520-a836-53025e297674.png)
@@ -9,7 +9,7 @@ react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai�
 
 
 
-#사용 툴
+# 사용 툴
 react, spring boot, h2
 
 - react : Component 캡슐화 , Context API, axios 라이브러리를 사용하여 구성 / MUI로 디자인
