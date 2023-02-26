@@ -1,23 +1,16 @@
 
 import React, {useEffect, useState, useContext} from 'react';
 import axios from 'axios';
-import { Container, Grid, Button, ButtonGroup, Input, TextField, Typography } from '@mui/material'
+import { Container, Button, ButtonGroup, Input, TextField, Typography } from '@mui/material'
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 import '@fontsource/roboto/700.css';
-import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import Loading from './Loading';
-import { fontFamily } from '@mui/system';
 import './App.css'
-import { blue, blueGrey } from '@mui/material/colors';
-
-
-
-
 
 const ModContext = React.createContext();
 function ModProvider({ children }) {
-  const modState = useState([, ]);
+  const modState = useState([,]);
   return <ModContext.Provider value={modState}>
          {children}
         </ModContext.Provider>;
@@ -46,7 +39,6 @@ function useModState(putIndex) {
                     가 아니라면 1번 과정을 진행해주세요.<br />
                     - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br /><br />
 
-
                     1. 번역이 가능한 한글 질문을 하실 예정이시라면 아래 그림처럼 질문을 작성한 뒤
                     번역 버튼을 눌러주세요. 질문은 100자까지 허용합니다.<br />
                     <img src={require("./assets/pictures/번역.png")} /><br /><br />
@@ -65,7 +57,7 @@ function useModState(putIndex) {
                     <img src={require("./assets/pictures/그림5.png")} /><br /><br />
                     5. 답변이 출력되었을 때 한글로 번역이 필요한 경우 번역 버튼을 눌러주세요.<br />
                     <img src={require("./assets/pictures/그림6.png")} /><br /><br />
-                    6. 모든 과정이 끝났습니다. 도움말을 다시 보시려면 메인 화면 상단 버튼을 눌러주세요.<br />
+                    6. 모든 과정에 대한 도움말이 끝났습니다. 닫기 버튼을 눌러 도움말을 종료해주세요. 도움말을 다시 보시려면 메인 화면 상단 버튼을 눌러주세요.<br />
 
                 </DialogContentText>
                 <DialogActions>
@@ -97,14 +89,12 @@ function useModState(putIndex) {
         </Dialog>
         }
 
-
     function DialButton(props){
         const [mod, setMod] = useModState(1);
         const [mod2, setMod2] = useModState(2);
         return <>
         <Button variant='outlined' onClick={() => setMod(true)}>도움말 열기</Button>
         <Button variant='contained' onClick={() => setMod2(true)}>질문 예시 보기</Button>
-
         </>
     }
 
@@ -115,6 +105,7 @@ function FormProvider({ children }) {
              {children}
             </FormContext.Provider>;
     }
+
 function useFormState(putIndex) {
       const value = useContext(FormContext);
       if (value === undefined) throw new Error('error');
@@ -127,12 +118,9 @@ function useFormState(putIndex) {
           },];
 }
 
-
 function Box() {
-
     const [resultA, setResultA] = useFormState(2);
     console.log("box 렌더링");
-
     return <>
         <Container sx={{ m:1 , border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)'}}>
             <h3>번역이 필요할 경우 질문 입력</h3> <Form></Form>
@@ -149,7 +137,6 @@ function Box() {
     </>
 }
 
-
 function Form(props) {
     const [bindingQ, setBindingQ] = useFormState(0);
     const [transQ, setTransQ] = useFormState(1);
@@ -165,8 +152,7 @@ function Form(props) {
                     console.log(response);
                     setTransQ(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
                     })
-                    .catch(error => {
-                    console.log(error);});
+                    .catch(error => {console.log(error);});
             }}>
             <p><Input sx={{width:300}} inputProps={{maxLength:100}} required type="text" name="originQ" placeholder='한글로 질문을 입력해주세요' value={bindingQ||""} onChange=
             {event => {setBindingQ(event.target.value)}} /></p>
@@ -181,7 +167,6 @@ function ButtonForm(props) {
     const [qArr, setQArr] = useState([]);
     const [q2Arr, setQ2Arr] = useState([]);
     const [lCategory, SetLCategory] = useState('');
-
 
     console.log("buttonform 렌더링");
 
@@ -236,7 +221,6 @@ function TransForm(props) {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
 
-
     console.log("transform 렌더링");
     return <>
     <form onSubmit={event => {
@@ -251,7 +235,7 @@ function TransForm(props) {
                     setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'));
                     
                 } else {
-                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청시 사라집니다.");
+                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
                     window.alert("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
                     )
                     
@@ -295,18 +279,15 @@ function ResultForm() {
   }>
     <TextField name="resultA" inputProps={{maxLength:30000}} fullWidth multiline value={resultA||''} onChange={event => {setResultA(event.target.value);}} />
     <p><Button variant="outlined" type="submit">번역</Button></p>
-    
   </form>
-  
   </>
 }
 
 function TransResultForm() {
-    const [transA, setTransA] = useFormState(3);
-    return <TextField fullWidth multiline value={transA||''} onChange={event => {
-        setTransA(event.target.value)
-}}></TextField>
-
+        const [transA, setTransA] = useFormState(3);
+        return <TextField fullWidth multiline value={transA||''} onChange={event => {
+            setTransA(event.target.value)
+    }}></TextField>
 }
 
 
@@ -314,21 +295,20 @@ function App() {
 
   return (
         <>
-
+        <Container>
+            <ModProvider>
+            <CustomDial></CustomDial>
+            <CustomQuestionDial></CustomQuestionDial><br/>
+                <h1>gpt api를 이용한 프로그래밍 질문 웹서비스 <ContactSupportOutlinedIcon sx={{ fontSize:50, color:'#FFFFFF' }} /></h1>
+            <br/>
             <Container>
-                <ModProvider>
-                <CustomDial></CustomDial>
-                <CustomQuestionDial></CustomQuestionDial><br/>
-                    <h1>gpt api를 이용한 프로그래밍 질문 웹서비스 <ContactSupportOutlinedIcon sx={{ fontSize:50, color:'#FFFFFF' }} /></h1>
-                <br/>
-                <Container>
-                    <ButtonGroup>
-                        <DialButton></DialButton>
-                    </ButtonGroup><br/><br/>
-                </Container>
-                <FormProvider><Box></Box></FormProvider>
-                </ModProvider>
+                <ButtonGroup>
+                    <DialButton></DialButton>
+                </ButtonGroup><br/><br/>
             </Container>
+            <FormProvider><Box></Box></FormProvider>
+            </ModProvider>
+        </Container>
         </>
         );
 }

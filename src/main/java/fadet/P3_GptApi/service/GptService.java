@@ -19,7 +19,6 @@ public class GptService {
     private final QuestionToAnswerRepository questionToAnswerRepository;
 
     public String getAnswerContent(QuestionRequestDto dto) {
-        questionRepository.save(dto.toEntity());
         Question question = questionRepository.findLastOne().get(0);
         String answerContent = questionToAnswerRepository.getAnswer(question.getQuestionContent());
         return Answer.createAnswer(question, answerContent).getAnswerContent();
