@@ -1,0 +1,44 @@
+@font-face {
+	font-family: "nanumSR";
+	src: url(./assets/fonts/NanumFontSetup_TTF_SQUARE/NanumSquareR.ttf);
+}
+
+@font-face {
+  font-family: "nanumSL";
+  src: url(./assets/fonts/NanumFontSetup_TTF_SQUARE/NanumSquare_acL.ttf);
+}
+
+@font-face {
+  font-family: "nanumSB";
+  src: url(./assets/fonts/NanumFontSetup_TTF_SQUARE/NanumSquareB.ttf);
+}
+
+@font-face {
+  font-family: "nanumSEB";
+  src: url(./assets/fonts/NanumFontSetup_TTF_SQUARE/NanumSquare_acEB.ttf);
+}
+
+
+
+
+body {
+  background-image: url(./assets/pictures/laptop-2298286\ \(1\).png);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  font-family: 'nanumSB';
+
+}
+
+h1 {
+  font-family: 'nanumSEB';
+}
+
+p {
+  font-family: 'nanumSL';
+}
+
+p#a {
+  color:red;
+  font-family: 'nanumSEB';
+}
