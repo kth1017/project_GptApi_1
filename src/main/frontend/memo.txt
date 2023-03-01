@@ -1,0 +1,11 @@
+1. aws에 iam연결해서 자격증명 credencial 발급
+
+2. aws cli를 설치하기 위해 python 설정
+
+3. aws iam 사용자에게 각종 권한 부여
+
+4. codecommit에 코드 푸쉬
+
+5. eb.config에서 type error가 나서 deploy artifact에 json 추가
+
+6.

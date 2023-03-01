@@ -51,7 +51,9 @@ public class Controller {
     @PostMapping("/api/requestQuestion")
     public String requestQuestion(@RequestBody @Valid QuestionRequestDto dto){
         if(bucket2.tryConsume(1)){
+            System.out.println(gptService.getAnswerContent(dto));
             return gptService.getAnswerContent(dto);
+
         }
         return "Error:TOO MANY REQUEST";
     }

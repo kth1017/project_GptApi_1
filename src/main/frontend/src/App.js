@@ -232,7 +232,7 @@ function TransForm(props) {
                             {questionContent: `${LocalTransQ}`})
                 .then(response => { 
                 if (response.data.object === 'text_completion') {
-                    setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'));
+                    setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n').replace(/\\"/g,'\"'));
                     
                 } else {
                     setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
