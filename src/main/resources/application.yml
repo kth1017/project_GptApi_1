@@ -1,16 +1,24 @@
 spring:
   profiles:
+    session:
+      store-type: jdbc
     include: api-key
   datasource:
-    url: jdbc:h2:tcp://localhost/~/P3_GptApi
-    username: sa
+#    url: jdbc:h2:tcp://localhost/~/P3_GptApi
+##    url: jdbc:h2:tcp://h2:1521/test
+#    username: sa
+#    password:
+#    driver-class-name: org.h2.Driver
+#    initialization-mode: always
+#    platform: h2
+#    data: classpath:data.sql
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://db-p3.c8u84u5hf5nw.ap-northeast-2.rds.amazonaws.com:3306/Gpt
+    username:
     password:
-    driver-class-name: org.h2.Driver
-    initialization-mode: always
-    platform: h2
-    data: classpath:data.sql
   jpa:
     hibernate:
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       ddl-auto: create
     properties:
       hibernate:

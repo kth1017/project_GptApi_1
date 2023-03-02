@@ -28,9 +28,12 @@ dependencies {
 
 	implementation group: 'com.github.vladimir-bukhtoyarov', name: 'bucket4j-core', version: '7.0.0'
 
+
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation('org.projectlombok:lombok')
 	testAnnotationProcessor('org.projectlombok:lombok')
+
+	implementation("org.mariadb.jdbc:mariadb-java-client:2.1.2")
 }
 
 tasks.named('test') {

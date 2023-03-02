@@ -32,6 +32,12 @@ public class Controller {
             .addLimit(Bandwidth.simple(1,Duration.ofSeconds(10)))
             .build();
 
+    @GetMapping("/")
+    public String hello(){
+        System.out.println("ok");
+        return "ok";
+    }
+
     @PostMapping("/api/requestTransKE")
     public String  requestTransKtoE(@RequestBody @Valid ForTransKtoERequestDto dto){
         return papagoService.transKtoE(dto);
