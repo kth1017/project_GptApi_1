@@ -1,7 +1,7 @@
 # project_GptApi_1
 GptApi를 이용한 웹서비스 토이 프로젝트
-url : http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
-관련 post: https://fadet-coding.tistory.com/82
+-url : http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
+-관련 post: https://fadet-coding.tistory.com/82
 
 # 개요
 react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai질문 웹서비스
