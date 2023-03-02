@@ -1,5 +1,7 @@
 # project_GptApi_1
 GptApi를 이용한 웹서비스 토이 프로젝트
+url : http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
+관련 post: https://fadet-coding.tistory.com/82
 
 # 개요
 react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai질문 웹서비스
@@ -10,11 +12,17 @@ react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai�
 
 
 # 사용 툴
-react, spring boot, h2 / docker, aws beanstalk
+NginX(웹서버) > React(앞단) > axios > Spring Boot(뒷단) > JPA > mariaDB (DB)
 
 - react : Component 캡슐화 , Context API, axios 라이브러리를 사용하여 구성 / MUI로 디자인
 - sping boot: spring boot를 이용해 mvc 패턴의 서버 작성, jpa/jpql을 사용한 entity-db 매핑, junit5로 클래스별 유닛 테스트
 
-- docker : 개발한 코드를 전부 image로 build 
-- aws beanstalk : 빈스톡의 플랫폼 설정을 보다 쉽게 하기 위해 docker를 사용
+- amazon EC2&RDS : EC2를 사용하여 배포 + RDS DB 연동
+- docker : 모든 빌드 파일을 이미지화하여 EC2내 docker-compose를 사용해 배포
+- NginX : 리액트 앱 앞단의 웹 서버로 사용
+
+# 버전
+
+@1.0.0
+- 번역, ai 질문의 기본 기능만 구현 후 도커라이징하여 EC2로 배포
 
