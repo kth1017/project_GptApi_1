@@ -12,6 +12,7 @@ import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.util.NestedServletException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -39,12 +43,14 @@ class ControllerTest {
     @Autowired
     QuestionRepository questionRepository;
 
+
     private MockMvc mvc;
 
     // WebApplicationContext 사용하여 .setup으로 컨트롤러 묶어서 처리 가능. 컨트롤러 한개라 stand 사용
     @BeforeEach
     public void setup() {
         mvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerAdvice())
                 .build();
     }
 
@@ -58,6 +64,24 @@ class ControllerTest {
         mvc.perform(get(url))
                 .andExpect(status().is4xxClientError());
 
+    }
+
+    @Test
+    public void 다른dto사용_실패() throws Exception {
+        //given
+        //dto는 번역 url은 질문
+        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
+        String url = "http://localhost:8080/api/requestQuestion";
+        //when
+        //then
+        mvc.perform(post(url)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(new ObjectMapper().writeValueAsString(dto)))
+                .andExpect((result -> {
+                    Assertions.assertEquals(
+                            result.getResolvedException().getClass().getCanonicalName(),
+                            MethodArgumentNotValidException.class.getCanonicalName());
+                }));
     }
 
     @Test
@@ -256,4 +280,6 @@ class ControllerTest {
                         .content(new ObjectMapper().writeValueAsString(dto)))
                 .andExpect(status().is4xxClientError());
     }
+
+
 }

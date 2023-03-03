@@ -37,7 +37,9 @@ function useModState(putIndex) {
                     - Gpt ai는 한글 질문을 받을 경우 답변이 다소 느릴 수 있습니다.<br />
                     그렇기 때문에 한글로 질문하실 때 불가피한 경우(코드에 한글 포함, 번역이 안되는 한글 질문)
                     가 아니라면 1번 과정을 진행해주세요.<br />
-                    - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br /><br />
+                    - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br />
+                    - openai의 Gpt 서버에 이상이 있거나 ai가 답변하지 못할 질문을 할 경우 긴 로딩이 발생하며
+                    15초가 지나도 gpt api의 응답이 없을 경우 질문이 취소됩니다.<br /><br />
 
                     1. 번역이 가능한 한글 질문을 하실 예정이시라면 아래 그림처럼 질문을 작성한 뒤
                     번역 버튼을 눌러주세요. 질문은 100자까지 허용합니다.<br />
@@ -230,17 +232,16 @@ function TransForm(props) {
             const LocalTransQ = event.target.transQ.value; 
             axios.post('/api/requestQuestion',
                             {questionContent: `${LocalTransQ}`})
-                .then(response => { 
+                .then(response => {
                 if (response.data.object === 'text_completion') {
                     setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n').replace(/\\"/g,'\"'));
-                    
                 } else {
-                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
-                    window.alert("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
+                    setError("서버 동기화를 위해 요청은 10초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
+                    window.alert("서버 동기화를 위해 요청은 10초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
                     )
-                    
                }})
-                .catch(error => {console.log(error)})
+                .catch(error => {console.log(error);
+                window.alert("gpt서버 이상이나 잘못된 질문으로 인해 15초가 경과하여 질문이 취소됩니다.")})
                 .finally(() => {console.log("post 통신 성공")
                                 setLoading(false);});
             }}>

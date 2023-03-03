@@ -27,6 +27,7 @@ public class Controller {
     private final PapagoService papagoService;
     private final RecomQService recomQService;
     private final GptService gptService;
+
     //서버용 rate limit
     Bucket bucket2 = Bucket.builder()
             .addLimit(Bandwidth.simple(1,Duration.ofSeconds(10)))
@@ -49,9 +50,8 @@ public class Controller {
     }
 
     @PostMapping("/api/requestQuestion")
-    public String requestQuestion(@RequestBody @Valid QuestionRequestDto dto){
+    public String requestQuestion(@RequestBody @Valid QuestionRequestDto dto) throws Exception{
         if(bucket2.tryConsume(1)){
-            System.out.println(gptService.getAnswerContent(dto));
             return gptService.getAnswerContent(dto);
 
         }

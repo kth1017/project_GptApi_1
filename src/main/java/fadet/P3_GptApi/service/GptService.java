@@ -18,9 +18,11 @@ public class GptService {
     private final QuestionRepository questionRepository;
     private final QuestionToAnswerRepository questionToAnswerRepository;
 
+    @Transactional(timeout = 15)
     public String getAnswerContent(QuestionRequestDto dto) {
         Question question = questionRepository.save(dto.toEntity());
         String answerContent = questionToAnswerRepository.getAnswer(question.getQuestionContent());
         return Answer.createAnswer(question, answerContent).getAnswerContent();
     }
+
 }
