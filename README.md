@@ -22,8 +22,14 @@ NginX(웹서버) > React(앞단) > axios > Spring Boot(뒷단) > JPA > mariaDB (
 - docker : 모든 빌드 파일을 이미지화하여 EC2내 docker-compose를 사용해 배포
 - NginX : 리액트 앱 앞단의 웹 서버로 사용
 
-# 버전
+# ver 1.0.0
+branch 'main' commit 'ver 1.0.0'
+@ to be
+- 번역, ai 질문의 기본 기능 구현
+- 도커라이징하여 EC2로 배포
 
-@1.0.0
-- 번역, ai 질문의 기본 기능만 구현 후 도커라이징하여 EC2로 배포
-
+# ver 1.0.1
+branch 'main' commit 'ver 1.0.1'
+@to be
+- Controller로 들어오는 요청의 Exception handling을 위해 ControllerAdvice 추가
+- Gpt api 서버의 불안정 때문에 service의 timeout 설정
