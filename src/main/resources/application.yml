@@ -14,12 +14,12 @@ spring:
 
 #    data: classpath:data.sql
 #    driverClassName: org.mariadb.jdbc.Driver
-#    url: jdbc:mariadb://db-p3.c8u84u5hf5nw.ap-northeast-2.rds.amazonaws.com:3306/Gpt
+#    url: jdbc:mariadb://database-p3.c8u84u5hf5nw.ap-northeast-2.rds.amazonaws.com/Gpt
 #    username:
 #    password:
   jpa:
     hibernate:
-#      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+      dialect: org.hibernate.dialect.MySQL5InnoDBDialect
       ddl-auto: create
     properties:
       hibernate:
