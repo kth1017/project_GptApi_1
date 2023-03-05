@@ -13,14 +13,14 @@ react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai�
 
 
 # 사용 툴
-NginX(웹서버) > React(앞단) > axios > Spring Boot(뒷단) > JPA > mariaDB (DB)
+NginX(웹서버, 포워드 프록시) > React(앞단) > axios > Spring Boot(뒷단) > JPA > mariaDB (DB)
 
 - react : Component 캡슐화 , Context API, axios 라이브러리를 사용하여 구성 / MUI로 디자인
 - sping boot: spring boot를 이용해 mvc 패턴의 서버 작성, jpa/jpql을 사용한 entity-db 매핑, junit5로 클래스별 유닛 테스트
 
 - amazon EC2&RDS : EC2를 사용하여 배포 + RDS DB 연동
 - docker : 모든 빌드 파일을 이미지화하여 EC2내 docker-compose를 사용해 배포
-- NginX : 리액트 앱 앞단의 웹 서버로 사용
+- NginX : 포워드 프록시로 사용하여 정적 React build 파일 배포 및 캐싱
 
 # ver 1.0.0
 @branch 'main' commit 'ver 1.0.0'
