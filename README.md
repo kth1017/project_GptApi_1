@@ -1,8 +1,11 @@
 # project_GptApi_1
 GptApi를 이용한 웹서비스 토이 프로젝트
 
--url : http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
--관련 post: https://fadet-coding.tistory.com/82
+- 문제 발생 : gpt를 사용하여 프로그래밍 관련 질문을 하는데 한글로 질문하면 너무 오래 걸림
+- 해결 : 파파고를 통해 한글 질문을 영어로 변환하여 gpt에 영어로 질문하는 기능을 구현
+
+url 링크: http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
+post 링크: https://fadet-coding.tistory.com/82
 
 # 개요
 react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai질문 웹서비스
