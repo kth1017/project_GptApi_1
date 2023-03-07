@@ -34,5 +34,5 @@ NginX(웹서버, 포워드 프록시) > React(앞단) > axios > Spring Boot(뒷�
 
 @to be
 - Controller로 들어오는 요청의 Exception handling을 위해 ControllerAdvice 추가
-- Gpt api 서버의 불안정 때문에 service의 timeout 설정
+- Gpt api 서버가 불안정할 때가 존재하여 service의 timeout 설정
 - 배포 rds의 파라미터 그룹 수정
