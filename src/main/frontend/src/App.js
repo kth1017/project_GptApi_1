@@ -38,6 +38,8 @@ function useModState(putIndex) {
                     그렇기 때문에 한글로 질문하실 때 불가피한 경우(코드에 한글 포함, 번역이 안되는 한글 질문)
                     가 아니라면 1번 과정을 진행해주세요.<br />
                     - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br />
+                    - Gpt ai 특성상 코드를 짜달라는 등 주관적인 판단이 들어갈 수 있는 답변에선 세상에 없는 메서드를 사용하는 등의
+                    그럴듯해 보이는 거짓 내용이 포함될 수 있음을 유의해주세요.<br />
                     - openai의 Gpt 서버에 이상이 있거나 ai가 답변하지 못할 질문을 할 경우 긴 로딩이 발생하며
                     15초가 지나도 gpt api의 응답이 없을 경우 질문이 취소됩니다.<br /><br />
 
@@ -77,6 +79,10 @@ function useModState(putIndex) {
                     <DialogContentText>
                     # 가급적 프로그래밍 관련 질문만 해주세요. 다른 질문은 직접 gpt ai를 사용하시길 추천합니다.
                     또한 코드의 예시를 그대로 사용할 경우. 저작권에 대한 불이익을 받을 수 있습니다.<br />
+                    # 설명에도 언급했듯 ai의 답변에 주관적인 요소가 들어갈 수 있다면 거짓 메서드를 호출하거나
+                    실제로 존재하지 않는 라이브러리를 import하는 등 거짓이 섞일 수 있습니다. 따라서 실제 작동하는 코드를
+                    원하신다면 Github copilot을 사용하시는 것을 추천하며 이 페이지에서 얻는 답변은 단순
+                    참고용으로 사용해주시길 바랍니다.<br />
                     <br />1. 단순 프로그래밍 용어 질문<br />
                     <img src={require("./assets/pictures/질문1.png")} /><br /><br />
                     2. 에러 발생시 에러명&코드 질문<br />
@@ -121,7 +127,6 @@ function useFormState(putIndex) {
 }
 
 function Box() {
-    const [resultA, setResultA] = useFormState(2);
     console.log("box 렌더링");
     return <>
         <Container sx={{ m:1 , border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)'}}>
@@ -142,7 +147,6 @@ function Box() {
 function Form(props) {
     const [bindingQ, setBindingQ] = useFormState(0);
     const [transQ, setTransQ] = useFormState(1);
-    const [resultA, setResultA] = useFormState(2);
     console.log("form 렌더링");
 
     return <form onSubmit={event =>{
@@ -151,9 +155,9 @@ function Form(props) {
         axios.post('/api/requestTransKE',
                     {sentence: `${originQ}`})
                     .then(response => {
-                    console.log(response);
+                    console.log(response.data);
                     setTransQ(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
-                    })
+                })
                     .catch(error => {console.log(error);});
             }}>
             <p><Input sx={{width:300}} inputProps={{maxLength:100}} required type="text" name="originQ" placeholder='한글로 질문을 입력해주세요' value={bindingQ||""} onChange=

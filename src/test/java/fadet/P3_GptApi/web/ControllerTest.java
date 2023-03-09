@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import fadet.P3_GptApi.domain.entity.answer.AnswerRepository;
 import fadet.P3_GptApi.domain.entity.question.QuestionRepository;
+import fadet.P3_GptApi.domain.forTrans.ForTrans;
 import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
 import fadet.P3_GptApi.service.GptService;
@@ -57,7 +58,7 @@ class ControllerTest {
     @Test
     public void url잘못작성_통신실패4xx() throws Exception {
         //given
-        forTransRepository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
+        forTransRepository.saveKtoE(new ForTrans("안녕하세요.", 1));
         String url = "http://localhost:8080/api/";
         //when
         //then

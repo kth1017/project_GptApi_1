@@ -26,7 +26,7 @@ class ForTransRepositoryTest  {
     void 번역할문장저장_1_KtoE(){
         //given
         //when
-        repository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
+        repository.saveKtoE(new ForTrans("안녕하세요.", 1));
         //then
         assertThat(repository.findLastOne().getSentence()).isEqualTo("안녕하세요.");
     }
@@ -34,7 +34,7 @@ class ForTransRepositoryTest  {
     void 번역할문장저장_2_EtoK(){
         //given
         //when
-        repository.saveEtoK(new ForTransEtoKRequestDto("Hello."));
+        repository.saveEtoK(new ForTrans("Hello.", 2));
         //then
         assertThat(repository.findLastOne().getSentence()).isEqualTo("Hello.");
     }
@@ -42,7 +42,7 @@ class ForTransRepositoryTest  {
     @Test
     void 저장된문장불러오기_1_KtoE(){
         //given
-        repository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
+        repository.saveKtoE(new ForTrans("안녕하세요.", 1));
         //when
         ForTrans lastOne = repository.findLastOne();
         //then
@@ -52,7 +52,7 @@ class ForTransRepositoryTest  {
     @Test
     void 저장된문장불러오기_2_EtoK(){
         //given
-        repository.saveEtoK(new ForTransEtoKRequestDto("Hello."));
+        repository.saveEtoK(new ForTrans("Hello.", 2));
         //when
         ForTrans lastOne = repository.findLastOne();
         //then
@@ -62,7 +62,7 @@ class ForTransRepositoryTest  {
     @Test
     void 번역된문장불러오기_1_KtoE(){
         //given
-        repository.saveKtoE(new ForTransKtoERequestDto("안녕하세요."));
+        repository.saveKtoE(new ForTrans("안녕하세요.", 1));
         //when
         String text = repository.getTranslatedText();
         //then
@@ -72,7 +72,7 @@ class ForTransRepositoryTest  {
     @Test
     void 번역된문장불러오기(){
         //given
-        repository.saveEtoK(new ForTransEtoKRequestDto("Hello."));
+        repository.saveEtoK(new ForTrans("Hello.", 2));
         //when
         String text = repository.getTranslatedText();
         //then

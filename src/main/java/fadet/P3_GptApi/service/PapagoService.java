@@ -16,12 +16,14 @@ public class PapagoService {
 
 
     public String transKtoE(ForTransKtoERequestDto dto) {
-        repository.saveKtoE(dto);
+        ForTrans newOneKE = dto.toDomain();
+        repository.saveKtoE(newOneKE);
         return repository.getTranslatedText();
     }
 
     public String transEtoK(ForTransEtoKRequestDto dto) {
-        repository.saveEtoK(dto);
+        ForTrans newOneEK = dto.toDomain();
+        repository.saveEtoK(newOneEK);
         return repository.getTranslatedText();
     }
 }

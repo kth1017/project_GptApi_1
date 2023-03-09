@@ -33,3 +33,5 @@
 15 [배포] 컨트롤러 테스트시 예외 처리를 먼저해야함 > advice 이용
 
 16 [1.0.1] rate limit/transaction 시간 조정
+
+17 [1.0.2] domain의 web 의존성 제거를 위해 reposit 수정

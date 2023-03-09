@@ -1,10 +1,7 @@
 package fadet.P3_GptApi.domain.forTrans;
 
 import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
 import lombok.Getter;
-import lombok.Setter;
 
 
 import java.io.*;

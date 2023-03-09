@@ -1,13 +1,9 @@
 package fadet.P3_GptApi.domain.forTrans;
 
 import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -29,16 +25,14 @@ public class ForTransRepositoryImpl implements ForTransRepository{
     }
 
     @Override
-    public ForTrans saveKtoE(ForTransKtoERequestDto KtoEDto){
-        ForTrans newOne = KtoEDto.toDomain();
+    public ForTrans saveKtoE(ForTrans newOne){
         newOne.setId(sequence++);
         store.put(newOne.getId(), newOne);
         return newOne;
     }
 
     @Override
-    public ForTrans saveEtoK(ForTransEtoKRequestDto EtoKDto) {
-        ForTrans newOne = EtoKDto.toDomain();
+    public ForTrans saveEtoK(ForTrans newOne) {
         newOne.setId(sequence++);
         store.put(newOne.getId(), newOne);
         return newOne;
