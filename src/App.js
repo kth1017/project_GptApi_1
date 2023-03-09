@@ -37,7 +37,11 @@ function useModState(putIndex) {
                     - Gpt ai는 한글 질문을 받을 경우 답변이 다소 느릴 수 있습니다.<br />
                     그렇기 때문에 한글로 질문하실 때 불가피한 경우(코드에 한글 포함, 번역이 안되는 한글 질문)
                     가 아니라면 1번 과정을 진행해주세요.<br />
-                    - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br /><br />
+                    - 답변의 정확성을 위해 되도록 프로그래밍 관련 질문을 해주세요.<br />
+                    - Gpt ai 특성상 코드를 짜달라는 등 주관적인 판단이 들어갈 수 있는 답변에선 세상에 없는 메서드를 사용하는 등의
+                    그럴듯해 보이는 거짓 내용이 포함될 수 있음을 유의해주세요.<br />
+                    - openai의 Gpt 서버에 이상이 있거나 ai가 답변하지 못할 질문을 할 경우 긴 로딩이 발생하며
+                    15초가 지나도 gpt api의 응답이 없을 경우 질문이 취소됩니다.<br /><br />
 
                     1. 번역이 가능한 한글 질문을 하실 예정이시라면 아래 그림처럼 질문을 작성한 뒤
                     번역 버튼을 눌러주세요. 질문은 100자까지 허용합니다.<br />
@@ -52,7 +56,7 @@ function useModState(putIndex) {
                     직접 ai에게할 질문을 입력하신 뒤 버튼을 눌러주세요.<br />
                     <img src={require("./assets/pictures/그림4.png")} /><br /><br />
                     4. 버튼을 누르면 아래 그림처럼 로딩 스피너가 나오니 답변이 출력될 때까지 기다려주세요.
-                    요청 중복 방지를 위해 질문은 15초에 한 번으로 제한합니다.
+                    요청 중복 방지를 위해 질문은 10초에 한 번으로 제한합니다.
                     혹시 로딩 스피너가 사라지지 않는다면 정상 요청을 한 번 다시 해주세요.<br />
                     <img src={require("./assets/pictures/그림5.png")} /><br /><br />
                     5. 답변이 출력되었을 때 한글로 번역이 필요한 경우 번역 버튼을 눌러주세요.<br />
@@ -75,6 +79,10 @@ function useModState(putIndex) {
                     <DialogContentText>
                     # 가급적 프로그래밍 관련 질문만 해주세요. 다른 질문은 직접 gpt ai를 사용하시길 추천합니다.
                     또한 코드의 예시를 그대로 사용할 경우. 저작권에 대한 불이익을 받을 수 있습니다.<br />
+                    # 설명에도 언급했듯 ai의 답변에 주관적인 요소가 들어갈 수 있다면 거짓 메서드를 호출하거나
+                    실제로 존재하지 않는 라이브러리를 import하는 등 거짓이 섞일 수 있습니다. 따라서 작동하는 코드를
+                    원하신다면 Github copilot을 사용하시는 것을 추천하며 이 페이지에서 얻는 답변은 단순
+                    참고용으로 사용해주시길 바랍니다.<br />
                     <br />1. 단순 프로그래밍 용어 질문<br />
                     <img src={require("./assets/pictures/질문1.png")} /><br /><br />
                     2. 에러 발생시 에러명&코드 질문<br />
@@ -119,7 +127,6 @@ function useFormState(putIndex) {
 }
 
 function Box() {
-    const [resultA, setResultA] = useFormState(2);
     console.log("box 렌더링");
     return <>
         <Container sx={{ m:1 , border: 1, padding: 2, borderColor: 'divider', backgroundColor: 'rgba(240, 255, 255, 0.8)'}}>
@@ -140,7 +147,6 @@ function Box() {
 function Form(props) {
     const [bindingQ, setBindingQ] = useFormState(0);
     const [transQ, setTransQ] = useFormState(1);
-    const [resultA, setResultA] = useFormState(2);
     console.log("form 렌더링");
 
     return <form onSubmit={event =>{
@@ -149,9 +155,9 @@ function Form(props) {
         axios.post('/api/requestTransKE',
                     {sentence: `${originQ}`})
                     .then(response => {
-                    console.log(response);
+                    console.log(response.data);
                     setTransQ(JSON.stringify(response.data.message.result.translatedText).replace(/"/gi, ""));
-                    })
+                })
                     .catch(error => {console.log(error);});
             }}>
             <p><Input sx={{width:300}} inputProps={{maxLength:100}} required type="text" name="originQ" placeholder='한글로 질문을 입력해주세요' value={bindingQ||""} onChange=
@@ -230,17 +236,16 @@ function TransForm(props) {
             const LocalTransQ = event.target.transQ.value; 
             axios.post('/api/requestQuestion',
                             {questionContent: `${LocalTransQ}`})
-                .then(response => { 
+                .then(response => {
                 if (response.data.object === 'text_completion') {
-                    setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n'));
-                    
+                    setResultA(JSON.stringify(response.data.choices[0].text).slice(5,-1).replace(/\\n/gi,'\n').replace(/\\"/g,'\"'));
                 } else {
-                    setError("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
-                    window.alert("서버 동기화를 위해 요청은 5초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
+                    setError("서버 동기화를 위해 요청은 10초마다 보낼 수 있습니다. 이 메세지는 정상 요청 이후 답변이 출력되면 사라집니다.");
+                    window.alert("서버 동기화를 위해 요청은 10초마다 보낼 수 있습니다. 혹은 다른 사용자와 요청이 겹쳤을 수 있습니다."
                     )
-                    
                }})
-                .catch(error => {console.log(error)})
+                .catch(error => {console.log(error);
+                window.alert("gpt서버 이상이나 잘못된 질문으로 인해 15초가 경과하여 질문이 취소됩니다.")})
                 .finally(() => {console.log("post 통신 성공")
                                 setLoading(false);});
             }}>
