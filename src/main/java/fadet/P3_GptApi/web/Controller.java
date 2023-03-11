@@ -4,8 +4,8 @@ package fadet.P3_GptApi.web;
 import fadet.P3_GptApi.service.GptService;
 import fadet.P3_GptApi.service.PapagoService;
 import fadet.P3_GptApi.service.RecomQService;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateKtoERequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import io.github.bucket4j.Bandwidth;
@@ -34,7 +34,7 @@ public class Controller {
             .build();
 
     @PostMapping("/api/requestTransKE")
-    public String  requestTransKtoE(@RequestBody @Valid ForTransKtoERequestDto dto){
+    public String  requestTransKtoE(@RequestBody @Valid TranslateKtoERequestDto dto){
         return papagoService.transKtoE(dto);
     }
 
@@ -59,7 +59,7 @@ public class Controller {
     }
 
     @PostMapping(value="/api/requestTransEK", produces="text/plain;charset=UTF-8")
-    public String requestTransEK(@RequestBody @Valid ForTransEtoKRequestDto dto){
+    public String requestTransEK(@RequestBody @Valid TranslateEtoKRequestDto dto){
         return papagoService.transEtoK(dto);
     }
 

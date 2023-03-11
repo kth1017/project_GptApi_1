@@ -1,8 +1,8 @@
 package fadet.P3_GptApi.domain.forTrans;
 
 import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateKtoERequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class ForTransTest {
+class TranslateTest {
 
     @Autowired
     ApiKey apiKey;
@@ -19,10 +19,10 @@ class ForTransTest {
     @Test
     void KtoEdao생성() {
         //given
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요");
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto("안녕하세요");
 
         //when
-        ForTrans newDao = dto.toDomain();
+        Translate newDao = dto.toDomain();
 
         //then
         assertThat(newDao.getSentence()).isEqualTo("안녕하세요");
@@ -31,8 +31,8 @@ class ForTransTest {
     @Test
     void incoding테스트_타입1() {
         //given
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
-        ForTrans newDomain = dto.toDomain();
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto("안녕하세요.");
+        Translate newDomain = dto.toDomain();
 
         //when
         String body = newDomain.incoding(apiKey);
@@ -44,8 +44,8 @@ class ForTransTest {
     @Test
     void incoding테스트_타입2() {
         //given
-        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("Hello.");
-        ForTrans newDomain = dto.toDomain();
+        TranslateEtoKRequestDto dto = new TranslateEtoKRequestDto("Hello.");
+        Translate newDomain = dto.toDomain();
 
         //when
         String body = newDomain.incoding(apiKey);

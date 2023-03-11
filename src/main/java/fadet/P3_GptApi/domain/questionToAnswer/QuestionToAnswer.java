@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 //Id 때문에 setId 추가
+/*
+    받는 응답 그 자체를 저장하는 class
+ */
 @Getter
 public class QuestionToAnswer {
     private Long id;

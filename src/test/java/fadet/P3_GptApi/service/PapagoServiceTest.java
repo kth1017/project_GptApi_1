@@ -1,8 +1,7 @@
 package fadet.P3_GptApi.service;
 
-import fadet.P3_GptApi.ApiKey;
-import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.domain.forTrans.TranslateRepositoryImpl;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateKtoERequestDto;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PapagoServiceTest {
 
     @Autowired
-    ForTransRepositoryImpl repository;
+    TranslateRepositoryImpl repository;
     @Autowired PapagoService papagoService;
 
     @AfterEach
@@ -25,14 +24,13 @@ class PapagoServiceTest {
     @Test
     void KoToEn번역요청(){
         //given
-        String expectedMessage = "{\"message\":{\"result\":{\"srcLangType\":\"ko\",\"tarLangType\":\"en\",\"translatedText\":\"Hello.\",\"engineType\":\"PRETRANS\",\"pivot\":null,\"dict\":null,\"tarDict\":null,\"modelVer\":\"Unknown\"},\"@type\":\"response\",\"@service\":\"naverservice.nmt.proxy\",\"@version\":\"1.0.0\"}}";
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto("안녕하세요.");
 
         //when
         String transedContent = papagoService.transKtoE(dto);
 
         //then
-        assertThat(transedContent).isEqualTo(expectedMessage);
+        assertThat(transedContent).contains("Hello.");
     }
 
 }

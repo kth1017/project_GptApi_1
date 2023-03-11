@@ -2,15 +2,12 @@ package fadet.P3_GptApi.web;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import fadet.P3_GptApi.domain.entity.answer.AnswerRepository;
 import fadet.P3_GptApi.domain.entity.question.QuestionRepository;
-import fadet.P3_GptApi.domain.forTrans.ForTrans;
-import fadet.P3_GptApi.domain.forTrans.ForTransRepositoryImpl;
+import fadet.P3_GptApi.domain.forTrans.Translate;
+import fadet.P3_GptApi.domain.forTrans.TranslateRepositoryImpl;
 import fadet.P3_GptApi.domain.recomQ.RecomQRepository;
-import fadet.P3_GptApi.service.GptService;
-import fadet.P3_GptApi.service.PapagoService;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransEtoKRequestDto;
-import fadet.P3_GptApi.web.dto.requestDto.ForTransKtoERequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateEtoKRequestDto;
+import fadet.P3_GptApi.web.dto.requestDto.TranslateKtoERequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.QuestionRequestDto;
 import fadet.P3_GptApi.web.dto.requestDto.RQ2RequestDto;
 import org.junit.jupiter.api.Assertions;
@@ -23,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.util.NestedServletException;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,7 +34,7 @@ class ControllerTest {
     @Autowired
     Controller controller;
     @Autowired
-    ForTransRepositoryImpl forTransRepository;
+    TranslateRepositoryImpl forTransRepository;
     @Autowired
     RecomQRepository recomQRepository;
     @Autowired
@@ -58,7 +54,7 @@ class ControllerTest {
     @Test
     public void url잘못작성_통신실패4xx() throws Exception {
         //given
-        forTransRepository.saveKtoE(new ForTrans("안녕하세요.", 1));
+        forTransRepository.saveKtoE(new Translate("안녕하세요.", 1));
         String url = "http://localhost:8080/api/";
         //when
         //then
@@ -71,7 +67,7 @@ class ControllerTest {
     public void 다른dto사용_실패() throws Exception {
         //given
         //dto는 번역 url은 질문
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto("안녕하세요.");
         String url = "http://localhost:8080/api/requestQuestion";
         //when
         //then
@@ -88,7 +84,7 @@ class ControllerTest {
     @Test
     public void post_번역할첫질문답변_성공() throws Exception {
         //given
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto("안녕하세요.");
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto("안녕하세요.");
         String url = "http://localhost:8080/api/requestTransKE";
         //when
         //then
@@ -104,7 +100,7 @@ class ControllerTest {
     @Test
     public void post_번역할첫질문답변_NULLor빈값전달_실패() throws Exception {
         //given
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto(" ");
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto(" ");
         String url = "http://localhost:8080/api/requestTransKE";
         //when
         //then
@@ -122,7 +118,7 @@ class ControllerTest {
         for (int i = 0; i < 200; i++) {
             sb.append("가");
         }
-        ForTransKtoERequestDto dto = new ForTransKtoERequestDto(sb.toString());
+        TranslateKtoERequestDto dto = new TranslateKtoERequestDto(sb.toString());
         String url = "http://localhost:8080/api/requestTransKE";
         //when
         //then
@@ -238,7 +234,7 @@ class ControllerTest {
     @Test
     public void post_ai답변한글로번역_성공() throws Exception {
         //given
-        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("java is good.");;
+        TranslateEtoKRequestDto dto = new TranslateEtoKRequestDto("java is good.");;
         String url = "http://localhost:8080/api/requestTransEK";
         //when
         //then
@@ -254,7 +250,7 @@ class ControllerTest {
     @Test
     public void post_ai답변한글로번역_Nullor빈값_실패_() throws Exception {
         //given
-        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto("  ");;
+        TranslateEtoKRequestDto dto = new TranslateEtoKRequestDto("  ");;
         String url = "http://localhost:8080/api/requestTransEK";
         //when
         //then
@@ -272,7 +268,7 @@ class ControllerTest {
         for (int i = 0; i < 30001; i++) {
             sb.append("a");
         }
-        ForTransEtoKRequestDto dto = new ForTransEtoKRequestDto(sb.toString());;
+        TranslateEtoKRequestDto dto = new TranslateEtoKRequestDto(sb.toString());;
         String url = "http://localhost:8080/api/requestTransEK";
         //when
         //then

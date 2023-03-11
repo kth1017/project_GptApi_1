@@ -9,9 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RequiredArgsConstructor
 @Repository
-public class ForTransRepositoryImpl implements ForTransRepository{
+public class TranslateRepositoryImpl implements TranslateRepository {
 
-    private static Map<Long, ForTrans> store = new ConcurrentHashMap<>();
+    private static Map<Long, Translate> store = new ConcurrentHashMap<>();
     private static long sequence = 1L;
 
     private final ApiKey apiKey;
@@ -25,21 +25,21 @@ public class ForTransRepositoryImpl implements ForTransRepository{
     }
 
     @Override
-    public ForTrans saveKtoE(ForTrans newOne){
+    public Translate saveKtoE(Translate newOne){
         newOne.setId(sequence++);
         store.put(newOne.getId(), newOne);
         return newOne;
     }
 
     @Override
-    public ForTrans saveEtoK(ForTrans newOne) {
+    public Translate saveEtoK(Translate newOne) {
         newOne.setId(sequence++);
         store.put(newOne.getId(), newOne);
         return newOne;
     }
 
     @Override
-    public ForTrans findLastOne() {
+    public Translate findLastOne() {
         Long size = (long)store.size();
         return store.get(size);
     }

@@ -13,13 +13,13 @@ import java.util.HashMap;
 import java.util.Map;
 //Id 때문에 setId 추가
 @Getter
-public class ForTrans {
+public class Translate {
     private Long id;
 
     private String sentence;
     private int transType;
 
-    public ForTrans(String sentence, int transType) {
+    public Translate(String sentence, int transType) {
         this.sentence = sentence;
         this.transType = transType;
     }

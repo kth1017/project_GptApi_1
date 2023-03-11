@@ -1,7 +1,5 @@
 package fadet.P3_GptApi.domain.recomQ;
 
-import fadet.P3_GptApi.domain.forTrans.ForTrans;
-import fadet.P3_GptApi.domain.questionToAnswer.QuestionToAnswer;
 import lombok.Getter;
 import org.springframework.stereotype.Repository;
 
