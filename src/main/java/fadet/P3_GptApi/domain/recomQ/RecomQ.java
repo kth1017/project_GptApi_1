@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
+/*
+    로그인 기능 추가시 엔티티 승격 에정이라 enum 사용 안함
+ */
 @Getter
 @NoArgsConstructor
 public class RecomQ {

@@ -35,3 +35,5 @@
 16 [1.0.1] rate limit/transaction 시간 조정
 
 17 [1.0.2] domain의 web 의존성 제거를 위해 reposit 수정
+
+18 [1.0.2] 백엔드 스프링 부분 수정 고민
