@@ -1,4 +1,4 @@
-package fadet.P3_GptApi.domain.questionToAnswer;
+package fadet.P3_GptApi.domain.forAsk;
 
 import fadet.P3_GptApi.ApiKey;
 import lombok.RequiredArgsConstructor;
@@ -9,9 +9,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RequiredArgsConstructor
 @Repository
-public class QuestionToAnswerRepositoryImpl implements QuestionToAnswerRepository{
+public class AskGptRepositoryImpl implements AskGptRepository {
 
-    private static Map<Long, QuestionToAnswer> store = new ConcurrentHashMap<>();
+    private static Map<Long, AskGpt> store = new ConcurrentHashMap<>();
     private static long sequence = 1L;
 
     private final ApiKey apiKey;
@@ -26,9 +26,9 @@ public class QuestionToAnswerRepositoryImpl implements QuestionToAnswerRepositor
 
     @Override
     public String getAnswer(String question) {
-        QuestionToAnswer questionToAnswer = new QuestionToAnswer(question, apiKey);
-        questionToAnswer.setId(sequence++);
-        store.put(questionToAnswer.getId(), questionToAnswer);
-        return questionToAnswer.getAnswer();
+        AskGpt askGpt = new AskGpt(question, apiKey);
+        askGpt.setId(sequence++);
+        store.put(askGpt.getId(), askGpt);
+        return askGpt.getAnswer();
     }
 }

@@ -1,4 +1,4 @@
-package fadet.P3_GptApi.domain.questionToAnswer;
+package fadet.P3_GptApi.domain.forAsk;
 
 import fadet.P3_GptApi.ApiKey;
 import org.junit.jupiter.api.Test;
@@ -8,7 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-class QuestionToAnswerTest {
+class AskGptTest {
 
     @Autowired
     ApiKey apiKey;
@@ -17,7 +17,7 @@ class QuestionToAnswerTest {
     void 인코딩성공후필드값세팅() {
         //given
         //when
-        QuestionToAnswer newOne = new QuestionToAnswer("what is java?", apiKey);
+        AskGpt newOne = new AskGpt("what is java?", apiKey);
         //then
         assertThat(newOne.getQuestion()).isEqualTo("what is java?");
         assertThat(newOne.getAnswer()).contains("Java");

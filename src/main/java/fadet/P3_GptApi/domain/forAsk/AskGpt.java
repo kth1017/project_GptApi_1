@@ -1,8 +1,7 @@
-package fadet.P3_GptApi.domain.questionToAnswer;
+package fadet.P3_GptApi.domain.forAsk;
 
 import fadet.P3_GptApi.ApiKey;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -15,12 +14,12 @@ import java.util.Map;
     받는 응답 그 자체를 저장하는 class
  */
 @Getter
-public class QuestionToAnswer {
+public class AskGpt {
     private Long id;
     private String question;
     private String answer;
 
-    public QuestionToAnswer(String question, ApiKey apikey){
+    public AskGpt(String question, ApiKey apikey){
         this.question = question;
         this.answer = incoding(apikey);
     }
