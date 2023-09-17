@@ -20,7 +20,7 @@ public class GptService {
 
     @Transactional(timeout = 15)
     public String getAnswerContent(QuestionRequestDto dto) {
-        // 1 질문을 받아 question eneity로 저장
+        // 1 질문을 받아 question entity로 저장
         Question newQuestion = questionRepository.save(dto.toEntity());
         // 2 요청 받은 question을 askGpt 도메인에 넘겨 answer를 불러옴 
         String answerContent = askGptRepository.getAnswer(newQuestion.getQuestionContent());

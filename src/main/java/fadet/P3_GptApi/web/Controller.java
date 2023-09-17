@@ -43,7 +43,7 @@ public class Controller {
         return recomQService.getRecomQ();
     }
 
-    //수정요
+    //수정 필요
     @PostMapping("/api/requestRQ2")
     public String[] requestRecomQ2(@RequestBody @Valid RQ2RequestDto dto){
         return recomQService.getRecomQ2(dto);
