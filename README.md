@@ -4,6 +4,12 @@ GptApi를 이용한 웹서비스 토이 프로젝트
 - 문제 발생 : gpt를 사용하여 프로그래밍 관련 질문을 하는데 한글로 질문하면 너무 오래 걸림
 - 해결 : 파파고를 통해 한글 질문을 영어로 변환하여 gpt에 영어로 질문하는 기능을 구현
 
+- Spring : Spring Boot로 서블릿 기반 Spring MVC 서버 구현, Spring Security의 Oauth 2.0으로 소셜 로그인 구현
+- JPA : Spring data jpa + JPQL로 entity를 영속화하여 DB와 연결
+- AWS : EC2 서버 내에서 무중단 스크립트 배포
+- JavaScript : 비동기 HTTP 통신을 위해 ajax 사용
+- thymeleaf : 타임리프를 사용해 검색, 페이징 구현
+
 url 링크: http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
 post 링크: https://fadet-coding.tistory.com/82
 
