@@ -1,5 +1,6 @@
 # project_GptApi_1
 외부 Api(Gpt/Papago)를 이용한 웹서비스 토이 프로젝트
+* 현재 text-davinci-003 모델의 deprecated로 코드 수정 후 재배포 예정
 
 - 문제 발생 :
   1) 블로그에서 선수 지식을 매번 상세히 설명하는게 너무 시간 낭비임
@@ -42,6 +43,6 @@ NginX(웹서버, 포워드 프록시) > React(앞단) > axios > Spring Boot(뒷�
 - Controller로 들어오는 요청의 Exception handling을 위해 ControllerAdvice 추가
 - Gpt api 서버가 불안정할 때가 존재하여 service의 timeout 설정
 - 배포 rds의 파라미터 그룹 수정
-- 240112 확인 후 db 초기화(로직 변경사항 없음) 
+- 231211 확인 후 db 초기화(로직 변경사항 없음) 
 
   
