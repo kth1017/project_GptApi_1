@@ -1,6 +1,6 @@
 # project_GptApi_1
 외부 Api(Gpt/Papago)를 이용한 웹서비스 토이 프로젝트
-* !!  현재 text-davinci-003 모델의 deprecated로 코드 수정 후 재배포 예정
+* 240112 추가 : 현재 text-davinci-003 모델의 deprecated로 코드 수정 후 재배포 예정
 
 - 문제 발생 :
   1) 블로그에서 선수 지식을 매번 상세히 설명하는게 너무 시간 낭비임
