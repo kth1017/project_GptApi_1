@@ -1,13 +1,14 @@
 # project_GptApi_1
 외부 Api(Gpt/Papago)를 이용한 웹서비스 토이 프로젝트
-* 240112 추가 : 현재 text-davinci-003 모델의 deprecated로 코드 수정 후 재배포 예정
+* 240112 추가 : 현재 text-davinci-003 모델의 deprecated로 코드 수정
+* 240125 추가 : ver 1.0.1 이후의 프로젝트는 P4로 이전(gpt모델 수정, actioins를 통한 CI+자동배포 등 더 상세한 이유는 후술할 내역 참조)
 
 - 문제 발생 :
   1) 블로그에서 선수 지식을 매번 상세히 설명하는게 너무 시간 낭비임
   2) chat gpt를 사용하여 프로그래밍 관련 질문을 하는데 한글로 질문하면 너무 오래 걸림(현재는 속도, 정확성 면에서 나쁘지 않지만 초기엔 그랬음)
 - 해결 : 파파고를 통해 한글 질문을 영어로 변환하여 gpt에 영어로 질문하는 기능을 구현
 
-url 링크: http://ec2-52-79-255-69.ap-northeast-2.compute.amazonaws.com:3000/
+url 링크: 현재 폐쇄 > P4 프로젝트에 작성
 post 링크: https://fadet-coding.tistory.com/82
 
 # 개요
@@ -43,6 +44,12 @@ NginX(웹서버, 포워드 프록시) > React(앞단) > axios > Spring Boot(뒷�
 - Controller로 들어오는 요청의 Exception handling을 위해 ControllerAdvice 추가
 - Gpt api 서버가 불안정할 때가 존재하여 service의 timeout 설정
 - 배포 rds의 파라미터 그룹 수정
-- 231211 확인 후 db 초기화(로직 변경사항 없음) 
+- 231211 확인 후 db 초기화(로직 변경사항 없음)
+
+# P4로 프로젝트 전환
+- gpt의 text-davinci-003 deprecated로 인해 gpt-3.5-turbo-instruct로 엔진 변경
+- github actions + runner 를 이용한 CI 구축 및 자동 배포 추가로 인한 파이프라인 추가
+- 기존 ssh 연결로 관리하던 ec2 인스턴스 > AWS Systems Manager를 이용해 인스턴스 관리
+- 상기한 이유들로 프로젝트 전환(기존 프로젝트의 ec2 폐쇄)
 
   
