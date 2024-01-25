@@ -9,7 +9,7 @@
 - 해결 : 파파고를 통해 한글 질문을 영어로 변환하여 gpt에 영어로 질문하는 기능을 구현
 
 url 링크: 현재 폐쇄 > P4 프로젝트에 작성
-post 링크: https://fadet-coding.tistory.com/82
+& post 링크: https://fadet-coding.tistory.com/82
 
 # 개요
 react+spring으로 GptApi, PapagoApi를 이용하여 만든 프로그래밍 ai질문 웹서비스
