@@ -48,7 +48,7 @@ NginX(웹서버, 포워드 프록시) > React(앞단) > axios > Spring Boot(뒷�
 
 # P4로 프로젝트 전환
 - gpt의 text-davinci-003 deprecated로 인해 gpt-3.5-turbo-instruct로 엔진 변경
-- github actions + runner 를 이용한 CI 구축 및 자동 배포 추가로 인한 파이프라인 추가
+- github actions + runner 를 이용한 CI 구축 및 자동 배포 파이프라인 추가
 - 기존 ssh 연결로 관리하던 ec2 인스턴스 > AWS Systems Manager를 이용해 인스턴스 관리
 - 상기한 이유들로 프로젝트 전환(기존 프로젝트의 ec2 폐쇄)
 
